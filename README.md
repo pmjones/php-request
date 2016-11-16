@@ -1,7 +1,9 @@
 # pmjones/request
 
-This package provides a PHP 5.x userland implementation of the PECL `request`
-extension. Usage is identical to that of the extension, with these exceptions:
+This package provides a PHP 5.x userland implementation of the PECL
+[`request`](http://pecl.php.net/request) extension (which is for PHP 7.x).
+
+Usage is identical to that of the extension, with these exceptions:
 
 - The `ServerRequest::__get()` etc. magic methods are declared as `final`; this
   is to help mitigate attempts to subvert immutability.

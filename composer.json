@@ -1,6 +1,6 @@
 {
-    "name": "pmjones/ext-request",
-    "description": "Server-side request and response objects.",
+    "name": "pmjones/request",
+    "description": "Server-side request and response objects from PECL request.",
     "type": "library",
     "license": "MIT",
     "require": {

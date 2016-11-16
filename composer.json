@@ -1,8 +1,20 @@
 {
     "name": "pmjones/request",
-    "description": "Server-side request and response objects from PECL request.",
+    "description": "Server-side request and response objects from <http://pecl.php.net/request>.",
     "type": "library",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "John Boehr",
+            "email": "jbboehr@php.net",
+            "role": "Lead"
+        },
+        {
+            "name": "Paul M. Jones",
+            "email": "pmjones@php.net",
+            "role": "Lead"
+        }
+    ],
     "require": {
         "php": "< 7.0.0"
     },

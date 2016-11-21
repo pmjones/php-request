@@ -22,6 +22,6 @@
         "classmap": ["src/"]
     },
     "scripts": {
-        "test": "TEST_PHP_EXECUTABLE=`which php` php run-tests.php -d auto_prepend_file=`pwd`/tests/prepend.php"
+        "test": "TEST_PHP_EXECUTABLE=`which php` php run-tests.php -q -d auto_prepend_file=`pwd`/tests/prepend.php"
     }
 }

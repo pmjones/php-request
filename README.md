@@ -12,3 +12,5 @@ Usage is identical to that of the extension, with these exceptions:
   instead of at the time of first access.
 
 You can read the documentation at <https://gitlab.com/pmjones/ext-request>.
+
+To run the tests, issue `composer test` at the package root.

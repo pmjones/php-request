@@ -11,6 +11,6 @@ Usage is identical to that of the extension, with these exceptions:
 - The `ServerRequest::$content` property is populated at instantiation time,
   instead of at the time of first access.
 
-You can read the documentation at <https://gitlab.com/pmjones/ext-request>.
+You can read the documentation at <https://github.com/pmjones/ext-request>.
 
 To run the tests, issue `composer test` at the package root.

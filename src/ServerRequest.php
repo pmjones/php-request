@@ -70,7 +70,7 @@ class ServerRequest
 
     private $_initialized = false;
 
-    public function __construct(array $globals = array())
+    public function __construct(array $globals = [])
     {
         if ($this->_initialized) {
             $class = get_class($this);
@@ -79,33 +79,30 @@ class ServerRequest
 
         $this->_initialized = true;
 
-        $this->env = $this->importGlobal(
-            isset($globals['_ENV']) ? $globals['_ENV'] : $_ENV,
-            '$_ENV'
-        );
+        $this->env = $this->importGlobal($globals['_ENV'] ?? $_ENV, '$_ENV');
 
         $this->server = $this->importGlobal(
-            isset($globals['_SERVER']) ? $globals['_SERVER'] : $_SERVER,
+            $globals['_SERVER'] ?? $_SERVER,
             '$_SERVER'
         );
 
         $this->cookie = $this->importGlobal(
-            isset($globals['_COOKIE']) ? $globals['_COOKIE'] : $_COOKIE,
+            $globals['_COOKIE'] ?? $_COOKIE,
             '$_COOKIE'
         );
 
         $this->files = $this->importGlobal(
-            isset($globals['_FILES']) ? $globals['_FILES'] : $_FILES,
+            $globals['_FILES'] ?? $_FILES,
             '$_FILES'
         );
 
         $this->get = $this->importGlobal(
-            isset($globals['_GET']) ? $globals['_GET'] : $_GET,
+            $globals['_GET'] ?? $_GET,
             '$_GET'
         );
 
         $this->post = $this->importGlobal(
-            isset($globals['_POST']) ? $globals['_POST'] : $_POST,
+            $globals['_POST'] ?? $_POST,
             '$_POST'
         );
 
@@ -122,13 +119,13 @@ class ServerRequest
             && strtolower($this->server['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
     }
 
-    protected function importGlobal($global, $descr)
+    protected function importGlobal(array $global, string $descr)
     {
         $this->assertImmutable($global, $descr);
         return $global;
     }
 
-    final public function __get($key) // : array
+    final public function __get(string $key) // : mixed
     {
         if (property_exists($this, $key) && $key{0} != '_') {
             return $this->$key;
@@ -138,13 +135,13 @@ class ServerRequest
         throw new RuntimeException("{$class}::\${$key} does not exist.");
     }
 
-    final public function __set($key, $val) // : void
+    final public function __set(string $key, $val) : void
     {
         $class = get_class($this);
         throw new RuntimeException("{$class}::\${$key} is read-only.");
     }
 
-    final public function __isset($key) // : bool
+    final public function __isset($key) : bool
     {
         if (property_exists($this, $key) && $key{0} != '_') {
             return isset($this->$key);
@@ -153,7 +150,7 @@ class ServerRequest
         return false;
     }
 
-    final public function __unset($key) // : void
+    final public function __unset(string $key) : void
     {
         if (property_exists($this, $key)) {
             $class = get_class($this);
@@ -161,7 +158,7 @@ class ServerRequest
         }
     }
 
-    protected function setMethod() // : void
+    protected function setMethod() : void
     {
         if (isset($this->server['REQUEST_METHOD'])) {
             $this->method = strtoupper($this->server['REQUEST_METHOD']);
@@ -172,7 +169,7 @@ class ServerRequest
         }
     }
 
-    protected function setHeaders() // : void
+    protected function setHeaders() : void
     {
         // headers prefixed with HTTP_*
         foreach ($this->server as $key => $val) {
@@ -193,7 +190,7 @@ class ServerRequest
         }
     }
 
-    protected function setForwarded()
+    protected function setForwarded() : void
     {
         if (isset($this->headers['x-forwarded-for'])) {
             $ips = explode(',', $this->headers['x-forwarded-for']);
@@ -220,7 +217,7 @@ class ServerRequest
         }
     }
 
-    protected function parseForward($string)
+    protected function parseForward(string $string) : array
     {
         $forward = [];
         $parts = explode(';', $string);
@@ -237,7 +234,7 @@ class ServerRequest
         return $forward;
     }
 
-    protected function setUrl() // : void
+    protected function setUrl() : void
     {
         // scheme
         $scheme = 'http://';
@@ -286,7 +283,7 @@ class ServerRequest
         $this->url = array_merge($base, parse_url($url));
     }
 
-    protected function setAccepts() // : void
+    protected function setAccepts() : void
     {
         if (isset($this->headers['accept'])) {
             $this->accept = $this->parseAccepts($this->headers['accept']);
@@ -321,7 +318,7 @@ class ServerRequest
      * @return array
      *
      */
-    protected function parseAccepts($string) // : array
+    protected function parseAccepts(string $string) : array
     {
         $buckets = [];
 
@@ -331,9 +328,9 @@ class ServerRequest
             $value = $pairs[0];
             unset($pairs[0]);
 
-            $params = array();
+            $params = [];
             foreach ($pairs as $pair) {
-                $param = array();
+                $param = [];
                 preg_match(
                     '/^(?P<name>.+?)=(?P<quoted>"|\')?(?P<value>.*?)(?:\k<quoted>)?$/',
                     $pair,
@@ -371,7 +368,7 @@ class ServerRequest
         return $return;
     }
 
-    protected function setAuth() // : void
+    protected function setAuth() : void
     {
         if (isset($this->server['PHP_AUTH_PW'])) {
             $this->authPw = $this->server['PHP_AUTH_PW'];
@@ -422,7 +419,7 @@ class ServerRequest
         }
     }
 
-    protected function setContent() // : void
+    protected function setContent() : void
     {
         $content = file_get_contents('php://input');
         if ($content) {
@@ -457,14 +454,14 @@ class ServerRequest
         }
     }
 
-    protected function setUploads() // : void
+    protected function setUploads() : void
     {
         foreach ($this->files as $key => $spec) {
             $this->uploads[$key] = $this->setUploadsFromSpec($spec);
         }
     }
 
-    protected function setUploadsFromSpec(array $spec) // : array
+    protected function setUploadsFromSpec(array $spec) : array
     {
         if (is_array($spec['tmp_name'])) {
             return $this->setUploadsFromNested($spec);
@@ -473,7 +470,7 @@ class ServerRequest
         return $spec;
     }
 
-    protected function setUploadsFromNested(array $nested) // : array
+    protected function setUploadsFromNested(array $nested) : array
     {
         $uploads = [];
         $keys = array_keys($nested['tmp_name']);
@@ -497,7 +494,7 @@ class ServerRequest
     // application/x-www-form-urlencoded:
     // parse_str($request->content, $input);
     // $request = $request->withInput($input);
-    final public function withInput($input)
+    final public function withInput(/* mixed */ $input) // : static
     {
         $this->assertImmutable($input, '$input');
         $clone = clone $this;
@@ -506,7 +503,7 @@ class ServerRequest
     }
 
     // sets one param
-    final public function withParam($key, $val)
+    final public function withParam(string $key, /* mixed */ $val) // : static
     {
         $this->assertImmutable($val, '$params');
         $clone = clone $this;
@@ -515,7 +512,7 @@ class ServerRequest
     }
 
     // sets all params
-    final public function withParams(array $params)
+    final public function withParams(array $params) // : static
     {
         $this->assertImmutable($params, '$params');
         $clone = clone $this;
@@ -524,7 +521,7 @@ class ServerRequest
     }
 
     // removes one param
-    final public function withoutParam($key)
+    final public function withoutParam(string $key) // : static
     {
         $clone = clone $this;
         unset($clone->params[$key]);
@@ -532,7 +529,7 @@ class ServerRequest
     }
 
     // removes multiple params
-    final public function withoutParams(array $keys = null)
+    final public function withoutParams(array $keys = null) // : static
     {
         $clone = clone $this;
 
@@ -550,7 +547,7 @@ class ServerRequest
 
     // resets the url.
     // note that this lets you set values that do not match other superglobals.
-    final public function withUrl(array $url)
+    final public function withUrl(array $url) // : static
     {
         $this->assertImmutable($url, '$url');
         $clone = clone $this;
@@ -563,7 +560,10 @@ class ServerRequest
         return $clone;
     }
 
-    final protected function assertImmutable($value, $descr)
+    final protected function assertImmutable(
+        /* mixed */ $value,
+        string $descr
+    ) : void
     {
         if (is_null($value) || is_scalar($value)) {
             return;
@@ -576,6 +576,8 @@ class ServerRequest
             return;
         }
 
-        throw new UnexpectedValueException("All $descr values must be null, scalar, or array.");
+        throw new UnexpectedValueException(
+            "All {$descr} values must be null, scalar, or array."
+        );
     }
 }

@@ -13,33 +13,33 @@ class ServerResponse
     protected $content;
     protected $callbacks = [];
 
-    public function getVersion() // : string
+    public function getVersion() : string
     {
         return $this->version;
     }
 
-    public function setVersion($version) // : void
+    public function setVersion(string $version) : void
     {
         $this->version = $version;
     }
 
-    public function getStatus() // : int
+    public function getStatus() : int
     {
         return $this->status;
     }
 
     // http_response_code($status)
-    public function setStatus($status)
+    public function setStatus(int $status)
     {
-        $this->status = (int) $status;
+        $this->status = $status;
     }
 
-    public function getHeaders() // : array
+    public function getHeaders() : array
     {
         return $this->headers;
     }
 
-    public function getHeader($label) // : string
+    public function getHeader(string $label) : string
     {
         $value = '';
         $label = strtolower(trim($label));
@@ -50,7 +50,7 @@ class ServerResponse
     }
 
     // header("$label: $value", true);
-    public function setHeader($label, $value) // : void
+    public function setHeader(string $label, /* mixed */ $value) : void
     {
         $label = strtolower(trim($label));
         if (! $label) {
@@ -71,7 +71,7 @@ class ServerResponse
     }
 
     // header("$label: $value", false);
-    public function addHeader($label, $value) // : void
+    public function addHeader(string $label, /* mixed */ $value) : void
     {
         $label = strtolower(trim($label));
         if (! $label) {
@@ -94,21 +94,21 @@ class ServerResponse
         }
     }
 
-    public function getCookies() // : array
+    public function getCookies() : array
     {
         return $this->cookies;
     }
 
     // setcookie()
     public function setCookie(
-        $name,
-        $value = "",
-        $expire = 0,
-        $path = "",
-        $domain = "",
-        $secure = false,
-        $httponly = false
-    ) // : void
+        string $name,
+        string $value = "",
+        int $expire = 0,
+        string $path = "",
+        string $domain = "",
+        bool $secure = false,
+        bool $httponly = false
+    ) : void
     {
         $this->cookies[$name] = [
             'raw' => false,
@@ -123,14 +123,14 @@ class ServerResponse
 
     // setrawcookie()
     public function setRawCookie(
-        $name,
-        $value = "",
-        $expire = 0,
-        $path = "",
-        $domain = "",
-        $secure = false,
-        $httponly = false
-    ) // : void
+        string $name,
+        string $value = "",
+        int $expire = 0,
+        string $path = "",
+        string $domain = "",
+        bool $secure = false,
+        bool $httponly = false
+    ) : void
     {
         $this->cookies[$name] = [
             'raw' => true,
@@ -148,12 +148,12 @@ class ServerResponse
         return $this->content;
     }
 
-    public function setContent($content) // : void
+    public function setContent(/* mixed */ $content) : void
     {
         $this->content = $content;
     }
 
-    public function setContentJson($value, $options = 0, $depth = 512) // : void
+    public function setContentJson(/* mixed */ $value, int $options = 0, int $depth = 512) : void
     {
         $content = json_encode($value, $options, $depth);
         if ($content === false) {
@@ -169,11 +169,11 @@ class ServerResponse
     // cf. https://www.iana.org/assignments/cont-disp/cont-disp.xhtml for
     // $disposition and $params values
     public function setContentDownload(
-        $fh,
-        $name,
-        $disposition = 'attachment',
+        /* resource */ $fh,
+        string $name,
+        string $disposition = 'attachment',
         array $params = []
-    ) // : void
+    ) : void
     {
         if (! is_resource($fh)) {
             $class = get_class($this);
@@ -201,7 +201,7 @@ class ServerResponse
      * "servers ... MUST only generate the RFC 1123 format for representing
      * HTTP-date values in header fields."
      */
-    public function date($date) // : string
+    public function date(/* mixed */ $date) : string
     {
         if ($date instanceof DateTime) {
             $date = clone $date;
@@ -213,7 +213,7 @@ class ServerResponse
         return $date->format(DateTime::RFC1123);
     }
 
-    protected function csv(array $values) // : string
+    protected function csv(array $values) : string
     {
         $csv = [];
         foreach ($values as $key => $val) {
@@ -228,7 +228,7 @@ class ServerResponse
         return implode(', ', $csv);
     }
 
-    protected function semicsv(array $values) // : string
+    protected function semicsv(array $values) : string
     {
         $semicsv = [];
         foreach ($values as $key => $val) {
@@ -241,7 +241,7 @@ class ServerResponse
         return implode(';', $semicsv);
     }
 
-    public function addHeaderCallback(callable $callback) // : void
+    public function addHeaderCallback(callable $callback) : void
     {
         $this->callbacks[] = $callback;
     }
@@ -250,7 +250,7 @@ class ServerResponse
     //
     // each callback in the array should have the signature
     // `function (ServerResponse $response)` -- returns will be ignored.
-    public function setHeaderCallbacks(array $callbacks) // : void
+    public function setHeaderCallbacks(array $callbacks) : void
     {
         $this->callbacks = [];
         foreach ($callbacks as $callback) {
@@ -258,13 +258,13 @@ class ServerResponse
         }
     }
 
-    public function getHeaderCallbacks() // : array
+    public function getHeaderCallbacks() : array
     {
         return $this->callbacks;
     }
 
     // if headers_sent() then fail?
-    public function send() // : void
+    public function send() : void
     {
         // if headers_sent() then fail?
         $this->runHeaderCallbacks();
@@ -274,27 +274,27 @@ class ServerResponse
         $this->sendContent();
     }
 
-    protected function runHeaderCallbacks() // : void
+    protected function runHeaderCallbacks() : void
     {
         foreach ($this->callbacks as $callback) {
             call_user_func($callback, $this);
         }
     }
 
-    protected function sendStatus() // : void
+    protected function sendStatus() : void
     {
         header("HTTP/{$this->version} {$this->status}", true, $this->status);
     }
 
     // capture other cookies at send-time, e.g. session ID?
-    protected function sendHeaders() // : void
+    protected function sendHeaders() : void
     {
         foreach ($this->headers as $label => $value) {
             header("{$label}: {$value}", false);
         }
     }
 
-    protected function sendCookies() // : void
+    protected function sendCookies() : void
     {
         foreach ($this->cookies as $name => $args) {
             if ($args['raw']) {
@@ -321,7 +321,7 @@ class ServerResponse
         }
     }
 
-    protected function sendContent() // : void
+    protected function sendContent() : void
     {
         if (is_object($this->content) && is_callable($this->content)) {
             $content = call_user_func($this->content, $this);

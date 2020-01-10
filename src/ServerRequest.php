@@ -65,7 +65,7 @@ class ServerRequest
     private /* array */ $post = [];
     private /* array */ $server = [];
     private /* array */ $uploads = [];
-    private /* string */ $url;
+    private /* array */ $url;
     private /* bool */ $xhr = false;
 
     private /* bool */ $_initialized = false;

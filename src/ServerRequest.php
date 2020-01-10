@@ -1,7 +1,8 @@
 <?php
+declare(strict_types=1);
+
 /**
- *
- * Immutable request object.
+ * Immutable server-side request object.
  *
  * @property-read $accept
  * @property-read $acceptCharset
@@ -33,42 +34,41 @@
  * @property-read $uploads
  * @property-read $url
  * @property-read $xhr
- *
  */
 class ServerRequest
 {
-    private $accept = [];
-    private $acceptCharset = [];
-    private $acceptEncoding = [];
-    private $acceptLanguage = [];
-    private $authDigest;
-    private $authPw;
-    private $authType;
-    private $authUser;
-    private $content;
-    private $contentCharset;
-    private $contentLength;
-    private $contentMd5;
-    private $contentType;
-    private $cookie = [];
-    private $env = [];
-    private $files = [];
-    private $forwarded = [];
-    private $forwardedFor = [];
-    private $forwardedHost;
-    private $forwardedProto;
-    private $get = [];
-    private $headers = [];
-    private $input;
-    private $method = '';
-    private $params = [];
-    private $post = [];
-    private $server = [];
-    private $uploads = [];
-    private $url;
-    private $xhr = false;
+    private /* array */ $accept = [];
+    private /* array */ $acceptCharset = [];
+    private /* array */ $acceptEncoding = [];
+    private /* array */ $acceptLanguage = [];
+    private /* string */ $authDigest;
+    private /* string */ $authPw;
+    private /* string */ $authType;
+    private /* string */ $authUser;
+    private /* string */ $content;
+    private /* string */ $contentCharset;
+    private /* int */ $contentLength;
+    private /* string */ $contentMd5;
+    private /* string */ $contentType;
+    private /* array */ $cookie = [];
+    private /* array */ $env = [];
+    private /* array */ $files = [];
+    private /* array */ $forwarded = [];
+    private /* array */ $forwardedFor = [];
+    private /* string */ $forwardedHost;
+    private /* string */ $forwardedProto;
+    private /* array */ $get = [];
+    private /* array */ $headers = [];
+    private /* string */ $input;
+    private /* string */ $method = '';
+    private /* array */ $params = [];
+    private /* array */ $post = [];
+    private /* array */ $server = [];
+    private /* array */ $uploads = [];
+    private /* string */ $url;
+    private /* bool */ $xhr = false;
 
-    private $_initialized = false;
+    private /* bool */ $_initialized = false;
 
     public function __construct(array $globals = [])
     {
@@ -119,7 +119,7 @@ class ServerRequest
             && strtolower($this->server['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
     }
 
-    protected function importGlobal(array $global, string $descr)
+    protected function importGlobal(array $global, string $descr) : void
     {
         $this->assertImmutable($global, $descr);
         return $global;

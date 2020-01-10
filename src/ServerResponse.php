@@ -1,17 +1,17 @@
 <?php
+declare(strict_types=1);
+
 /**
- *
- * Mutable response object.
- *
+ * Mutable server-side response object.
  */
 class ServerResponse
 {
-    protected $version = '1.1';
-    protected $status = 200;
-    protected $headers = [];
-    protected $cookies = [];
-    protected $content;
-    protected $callbacks = [];
+    protected /* string */ $version = '1.1';
+    protected /* int */ $status = 200;
+    protected /* array */ $headers = [];
+    protected /* array */ $cookies = [];
+    protected /* mixed */ $content;
+    protected /* array */ $callbacks = [];
 
     public function getVersion() : string
     {

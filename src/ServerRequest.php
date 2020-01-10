@@ -119,7 +119,7 @@ class ServerRequest
             && strtolower($this->server['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
     }
 
-    protected function importGlobal(array $global, string $descr) : void
+    protected function importGlobal(array $global, string $descr) : array
     {
         $this->assertImmutable($global, $descr);
         return $global;

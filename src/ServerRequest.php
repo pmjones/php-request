@@ -116,7 +116,7 @@ class ServerRequest
         $this->setUploads();
 
         $this->xhr = isset($this->server['HTTP_X_REQUESTED_WITH'])
-            && strtolower($this->server['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+            && strtolower($this->server['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
     }
 
     protected function importGlobal(array $global, string $descr) : array
@@ -127,7 +127,7 @@ class ServerRequest
 
     final public function __get(string $key) // : mixed
     {
-        if (property_exists($this, $key) && $key{0} != '_') {
+        if (property_exists($this, $key) && $key{0} !== '_') {
             return $this->$key;
         }
 
@@ -143,7 +143,7 @@ class ServerRequest
 
     final public function __isset($key) : bool
     {
-        if (property_exists($this, $key) && $key{0} != '_') {
+        if (property_exists($this, $key) && $key{0} !== '_') {
             return isset($this->$key);
         }
 
@@ -164,7 +164,7 @@ class ServerRequest
             $this->method = strtoupper($this->server['REQUEST_METHOD']);
         }
 
-        if ($this->method == 'POST' && isset($this->server['HTTP_X_HTTP_METHOD_OVERRIDE'])) {
+        if ($this->method === 'POST' && isset($this->server['HTTP_X_HTTP_METHOD_OVERRIDE'])) {
             $this->method = strtoupper($this->server['HTTP_X_HTTP_METHOD_OVERRIDE']);
         }
     }
@@ -173,7 +173,7 @@ class ServerRequest
     {
         // headers prefixed with HTTP_*
         foreach ($this->server as $key => $val) {
-            if (substr($key, 0, 5) == 'HTTP_') {
+            if (substr($key, 0, 5) === 'HTTP_') {
                 $key = substr($key, 5);
                 $key = str_replace('_', '-', strtolower($key));
                 $this->headers[$key] = $val;
@@ -238,7 +238,7 @@ class ServerRequest
     {
         // scheme
         $scheme = 'http://';
-        if (isset($this->server['HTTPS']) && strtolower($this->server['HTTPS']) == 'on') {
+        if (isset($this->server['HTTPS']) && strtolower($this->server['HTTPS']) === 'on') {
             $scheme = 'https://';
         }
 
@@ -260,7 +260,7 @@ class ServerRequest
         $port = isset($this->server['SERVER_PORT'])
             ? ':' . $this->server['SERVER_PORT']
             : '';
-        if ($port == '' && ! empty($host_port)) {
+        if ($port === '' && ! empty($host_port)) {
             $port = $host_port;
         }
 
@@ -447,7 +447,7 @@ class ServerRequest
 
         foreach ($parts as $part) {
             $part = str_replace(' ', '', $part);
-            if (substr($part, 0, 8) == 'charset=') {
+            if (substr($part, 0, 8) === 'charset=') {
                 $this->contentCharset = substr($part, 8);
                 return;
             }

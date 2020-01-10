@@ -59,7 +59,7 @@ class ServerRequest
     private /* string */ $forwardedProto;
     private /* array */ $get = [];
     private /* array */ $headers = [];
-    private /* string */ $input;
+    private /* mixed */ $input;
     private /* string */ $method = '';
     private /* array */ $params = [];
     private /* array */ $post = [];

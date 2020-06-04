@@ -2,16 +2,24 @@
 declare(strict_types=1);
 
 /**
- * Immutable server-side request object.
+ * Read-only server-side request object.
  *
- * @property-read $accept
- * @property-read $acceptCharset
- * @property-read $acceptEncoding
- * @property-read $acceptLanguage
- * @property-read $authDigest
- * @property-read $authPw
- * @property-read $authType
- * @property-read $authUser
+ * Has to be extensible so that frameworks can add their own stuff,
+ * and leave it usable by other systems that only need the base ServerRequest.
+ * Keep everything here private and final, so it cannot be overridden? Then
+ * it's guaranteed to stay the same.
+ *
+ * Cannot final the properties, which means they can be replaced by extended
+ * classes which could mess with them. Unless the read-only nature in PHP itself
+ * really sticks? ALternatively, since __get() etc. are final here, they will
+ * read *these* properties preferentially.
+ *
+ * How to make $content lazy-loadable?
+ *
+ * @property-read $acceptContentCharset
+ * @property-read $acceptContentEncoding
+ * @property-read $acceptContentLanguage
+ * @property-read $acceptContentType
  * @property-read $content
  * @property-read $contentCharset
  * @property-read $contentLength
@@ -26,107 +34,91 @@ declare(strict_types=1);
  * @property-read $forwardedProto
  * @property-read $get
  * @property-read $headers
- * @property-read $input
  * @property-read $method
- * @property-read $params
+ * @property-read $phpAuthDigest
+ * @property-read $phpAuthPw
+ * @property-read $phpAuthType
+ * @property-read $phpAuthUser
  * @property-read $post
+ * @property-read $requestedWith
  * @property-read $server
  * @property-read $uploads
- * @property-read $url
- * @property-read $xhr
  */
 class ServerRequest
 {
-    private /* array */ $accept = [];
-    private /* array */ $acceptCharset = [];
-    private /* array */ $acceptEncoding = [];
-    private /* array */ $acceptLanguage = [];
-    private /* string */ $authDigest;
-    private /* string */ $authPw;
-    private /* string */ $authType;
-    private /* string */ $authUser;
-    private /* string */ $content;
-    private /* string */ $contentCharset;
-    private /* int */ $contentLength;
-    private /* string */ $contentMd5;
-    private /* string */ $contentType;
+    private /* bool */ $initialized = false;
+
+    private /* array */ $acceptContentType = [];
+    private /* array */ $acceptContentCharset = [];
+    private /* array */ $acceptContentEncoding = [];
+    private /* array */ $acceptContentLanguage = [];
+    private /* string */ $phpAuthDigest = '';
+    private /* string */ $phpAuthPw = '';
+    private /* string */ $phpAuthType = '';
+    private /* string */ $phpAuthUser = '';
+    private /* string */ $content = '';
+    private /* string */ $contentCharset = '';
+    private /* string */ $contentLength = '';
+    private /* string */ $contentMd5 = '';
+    private /* string */ $contentType = '';
     private /* array */ $cookie = [];
     private /* array */ $env = [];
     private /* array */ $files = [];
     private /* array */ $forwarded = [];
     private /* array */ $forwardedFor = [];
-    private /* string */ $forwardedHost;
-    private /* string */ $forwardedProto;
+    private /* string */ $forwardedHost = '';
+    private /* string */ $forwardedProto = '';
     private /* array */ $get = [];
     private /* array */ $headers = [];
-    private /* mixed */ $input;
     private /* string */ $method = '';
-    private /* array */ $params = [];
     private /* array */ $post = [];
     private /* array */ $server = [];
     private /* array */ $uploads = [];
-    private /* array */ $url;
-    private /* bool */ $xhr = false;
-
-    private /* bool */ $_initialized = false;
 
     public function __construct(array $globals = [])
     {
-        if ($this->_initialized) {
+        if ($this->initialized) {
             $class = get_class($this);
             throw new RuntimeException("{$class}::__construct() called after construction.");
         }
 
-        $this->_initialized = true;
+        $this->cookie = $this->parseGlobal($globals, '_COOKIE');
+        $this->env = $this->parseGlobal($globals, '_ENV');
+        $this->files = $this->parseGlobal($globals, '_FILES');
+        $this->get = $this->parseGlobal($globals, '_GET');
+        $this->post = $this->parseGlobal($globals, '_POST');
+        $this->server = $this->parseGlobal($globals, '_SERVER');
+        $this->uploads = $this->parseUploads();
+        $this->headers = $this->getHeaders();
 
-        $this->env = $this->importGlobal($globals['_ENV'] ?? $_ENV, '$_ENV');
+        $this->acceptContentCharset = $this->parseAcceptContentCharset();
+        $this->acceptContentEncoding = $this->parseAcceptContentEncoding();
+        $this->acceptContentLanguage = $this->parseAcceptContentLanguage();
+        $this->acceptContentType = $this->parseAcceptContentType();
+        $this->contentCharset = $this->parseContentCharset();
+        $this->contentLength = $this->parseCntentLength();
+        $this->contentMd5 = $this->parseContentMd5();
+        $this->contentType = $this->parseContentType();
+        $this->forwarded = $this->parseForwarded();
+        $this->forwardedFor = $this->parseForwardedFor();
+        $this->forwardedHost = $this->parseForwardedHost();
+        $this->forwardedProto = $this->parseForwardedProto();
+        $this->method = $this->parseMethod();
+        $this->phpAuthDigest = $this->parsePhpAuthDigest();
+        $this->phpAuthPw = $this->parsePhpAuthPw();
+        $this->phpAuthType = $this->parsePhpAuthType();
+        $this->phpAuthUser = $this->parsePhpAuthUser();
+        $this->requestedWith = $this->parseRequestedWith();
 
-        $this->server = $this->importGlobal(
-            $globals['_SERVER'] ?? $_SERVER,
-            '$_SERVER'
-        );
-
-        $this->cookie = $this->importGlobal(
-            $globals['_COOKIE'] ?? $_COOKIE,
-            '$_COOKIE'
-        );
-
-        $this->files = $this->importGlobal(
-            $globals['_FILES'] ?? $_FILES,
-            '$_FILES'
-        );
-
-        $this->get = $this->importGlobal(
-            $globals['_GET'] ?? $_GET,
-            '$_GET'
-        );
-
-        $this->post = $this->importGlobal(
-            $globals['_POST'] ?? $_POST,
-            '$_POST'
-        );
-
-        $this->setMethod();
-        $this->setHeaders();
-        $this->setForwarded();
-        $this->setUrl();
-        $this->setAccepts();
-        $this->setAuth();
-        $this->setContent();
-        $this->setUploads();
-
-        $this->xhr = isset($this->server['HTTP_X_REQUESTED_WITH'])
-            && strtolower($this->server['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
-    }
-
-    protected function importGlobal(array $global, string $descr) : array
-    {
-        $this->assertImmutable($global, $descr);
-        return $global;
+        $this->initialized = true;
     }
 
     final public function __get(string $key) // : mixed
     {
+        if ($key === 'content' && $this->content === null) {
+            $this->content = $this->parseContent();
+        }
+
         if (property_exists($this, $key) && $key{0} !== '_') {
             return $this->$key;
         }
@@ -158,71 +150,137 @@ class ServerRequest
         }
     }
 
-    protected function setMethod() : void
+    private function parseGlobal(array $globals, string $key) : array
     {
-        if (isset($this->server['REQUEST_METHOD'])) {
-            $this->method = strtoupper($this->server['REQUEST_METHOD']);
-        }
-
-        if ($this->method === 'POST' && isset($this->server['HTTP_X_HTTP_METHOD_OVERRIDE'])) {
-            $this->method = strtoupper($this->server['HTTP_X_HTTP_METHOD_OVERRIDE']);
-        }
+        $global = $globals[$key] ?? [];
+        $this->assertImmutable($global, $key);
+        return $global;
     }
 
-    protected function setHeaders() : void
+    private function parseUploads() : array
     {
+        $uploads = [];
+        foreach ($this->files as $key => $spec) {
+            $uploads[$key] = $this->parseUploadsFromSpec($spec);
+        }
+        return $uploads;
+    }
+
+    private function parseUploadsFromSpec(array $spec) : array
+    {
+        if (is_array($spec['tmp_name'] ?? null)) {
+            return $this->parseUploadsFromNested($spec);
+        }
+
+        return $spec;
+    }
+
+    private function parseUploadsFromNested(array $nested) : array
+    {
+        $uploads = [];
+        $keys = array_keys($nested['tmp_name']);
+        foreach ($keys as $key) {
+            $spec = [
+                'error'    => $nested['error'][$key] ?? null,
+                'name'     => $nested['name'][$key] ?? null,
+                'size'     => $nested['size'][$key] ?? null,
+                'tmp_name' => $nested['tmp_name'][$key] ?? null,
+                'type'     => $nested['type'][$key] ?? null,
+            ];
+            $uploads[$key] = $this->setUploadsFromSpec($spec);
+        }
+        return $uploads;
+    }
+
+    private function parseHeaders() : array
+    {
+        $headers = [];
+
         // headers prefixed with HTTP_*
         foreach ($this->server as $key => $val) {
             if (substr($key, 0, 5) === 'HTTP_') {
                 $key = substr($key, 5);
                 $key = str_replace('_', '-', strtolower($key));
-                $this->headers[$key] = $val;
+                $headers[$key] = (string) $val;
             }
         }
 
         // RFC 3875 headers not prefixed with HTTP_*
         if (isset($this->server['CONTENT_LENGTH'])) {
-            $this->headers['content-length'] = $this->server['CONTENT_LENGTH'];
+            $headers['content-length'] = (string) $this->server['CONTENT_LENGTH'];
         }
 
         if (isset($this->server['CONTENT_TYPE'])) {
-            $this->headers['content-type'] = $this->server['CONTENT_TYPE'];
+            $headers['content-type'] = (string) $this->server['CONTENT_TYPE'];
         }
+
+        return $headers;
     }
 
-    protected function setForwarded() : void
+    private function parseMethod() : string
     {
-        if (isset($this->headers['x-forwarded-for'])) {
-            $ips = explode(',', $this->headers['x-forwarded-for']);
-            foreach ($ips as $ip) {
-                $this->forwardedFor[] = trim($ip);
-            }
+        $method = null;
+
+        if (isset($this->server['REQUEST_METHOD'])) {
+            $method = strtoupper($this->server['REQUEST_METHOD']);
         }
 
-        if (isset($this->headers['x-forwarded-host'])) {
-            $this->forwardedHost = trim($this->headers['x-forwarded-host']);
+        if (
+            $method === 'POST'
+            && isset($this->server['HTTP_X_HTTP_METHOD_OVERRIDE'])
+        ) {
+            $method = strtoupper($this->server['HTTP_X_HTTP_METHOD_OVERRIDE']);
         }
 
-        if (isset($this->headers['x-forwarded-proto'])) {
-            $this->forwardedProto = trim($this->headers['x-forwarded-proto']);
+        return $method;
+    }
+
+    private function parseForwardedFor() : array
+    {
+        if (! isset($this->headers['x-forwarded-for'])) {
+            return [];
         }
 
+        $forwardedFor = [];
+        $ips = explode(',', $this->headers['x-forwarded-for']);
+        foreach ($ips as $ip) {
+            $forwardedFor[] = trim($ip);
+        }
+
+        return $forwardedFor;
+    }
+
+    private function parseForwardedHost() : string
+    {
+        return trim($this->headers['x-forwarded-host'] ?? '');
+    }
+
+    private function parseForwardedProto() : string
+    {
+        return trim($this->headers['x-forwarded-proto'] ?? '');
+    }
+
+    private function parseForwarded() : array
+    {
         if (! isset($this->headers['forwarded'])) {
-            return;
+            return [];
         }
 
+        $forwarded = [];
         $forwards = explode(',', $this->headers['forwarded']);
         foreach ($forwards as $forward) {
-            $this->forwarded[] = $this->parseForward($forward);
+            $forwarded[] = $this->parseForward($forward);
         }
+
+        return $forwarded;
     }
 
-    protected function parseForward(string $string) : array
+    private function parseForward(string $string) : array
     {
         $forward = [];
         $parts = explode(';', $string);
         foreach ($parts as $part) {
-            if (! strpos($part, '=')) {
+            if (strpos($part, '=') === false) {
                 // malformed
                 continue;
             }
@@ -234,96 +292,48 @@ class ServerRequest
         return $forward;
     }
 
-    protected function setUrl() : void
+    private function parseAcceptContentType() : array
     {
-        // scheme
-        $scheme = 'http://';
-        if (isset($this->server['HTTPS']) && strtolower($this->server['HTTPS']) === 'on') {
-            $scheme = 'https://';
-        }
-
-        // host
-        if (isset($this->server['HTTP_HOST'])) {
-            $host = $this->server['HTTP_HOST'];
-        } elseif (isset($this->server['SERVER_NAME'])) {
-            $host = $this->server['SERVER_NAME'];
-        } else {
-            throw new RuntimeException("Could not determine host for ServerRequest.");
-        }
-
-        // port
-        preg_match('#\:[0-9]+$#', $host, $matches);
-        if ($matches) {
-            $host_port = array_pop($matches);
-            $host = substr($host, 0, -strlen($host_port));
-        }
-        $port = isset($this->server['SERVER_PORT'])
-            ? ':' . $this->server['SERVER_PORT']
-            : '';
-        if ($port === '' && ! empty($host_port)) {
-            $port = $host_port;
-        }
-
-        // all else
-        $uri = isset($this->server['REQUEST_URI'])
-            ? $this->server['REQUEST_URI']
-            : '';
-
-        $url = $scheme . $host . $port . $uri;
-        $base =  [
-            'scheme' => null,
-            'host' => null,
-            'port' => null,
-            'user' => null,
-            'pass' => null,
-            'path' => null,
-            'query' => null,
-            'fragment' => null,
-        ];
-        $this->url = array_merge($base, parse_url($url));
+        return $this->parseAccept($this->headers['accept'] ?? null);
     }
 
-    protected function setAccepts() : void
+    private function parseAcceptContentCharset() : array
     {
-        if (isset($this->headers['accept'])) {
-            $this->accept = $this->parseAccepts($this->headers['accept']);
-        }
-
-        if (isset($this->headers['accept-charset'])) {
-            $this->acceptCharset = $this->parseAccepts($this->headers['accept-charset']);
-        }
-
-        if (isset($this->headers['accept-encoding'])) {
-            $this->acceptEncoding = $this->parseAccepts($this->headers['accept-encoding']);
-        }
-
-        if (isset($this->headers['accept-language'])) {
-            $language = $this->parseAccepts($this->headers['accept-language']);
-            foreach ($language as $lang) {
-                $parts = explode('-', $lang['value']);
-                $lang['type'] = array_shift($parts);
-                $lang['subtype'] = array_shift($parts);
-                $this->acceptLanguage[] = $lang;
-            }
-        }
+        return $this->parseAccept($this->headers['accept-charset'] ?? null);
     }
 
-    /**
-     *
-     * Parses an `Accept*` string into an array.
-     *
-     * @param string $string An `Accept*` string value; e.g.,
-     * `text/plain;q=0.5,text/html,text/*;q=0.1`.
-     *
-     * @return array
-     *
-     */
-    protected function parseAccepts(string $string) : array
+    private function parseAcceptContentEncoding() : array
     {
+        return $this->parseAccept($this->headers['accept-encoding'] ?? null);
+    }
+
+    private function parseAcceptContentLanguage() : array
+    {
+        if (! isset($this->headers['accept-language'])) {
+            return [];
+        }
+
+        $acceptLanguage = [];
+        $langs = $this->parseAccept($this->headers['accept-language']);
+        foreach ($langs as $lang) {
+            $parts = explode('-', $lang['value']);
+            $lang['type'] = array_shift($parts);
+            $lang['subtype'] = array_shift($parts);
+            $acceptLanguage[] = $lang;
+        }
+        return $acceptLanguage;
+    }
+
+    private function parseAccept(?string $string) : array
+    {
+        if ($string === null) {
+            return [];
+        }
+
         $buckets = [];
 
         $values = explode(',', $string);
-        foreach ($values as $value) {
+        foreach ($values as $index => $value) {
             $pairs = explode(';', $value);
             $value = $pairs[0];
             unset($pairs[0]);
@@ -348,6 +358,7 @@ class ServerRequest
             $buckets[$quality][] = [
                 'value' => trim($value),
                 'quality' => $quality,
+                'index' => $index,
                 'params' => $params
             ];
         }
@@ -357,41 +368,91 @@ class ServerRequest
         krsort($buckets);
 
         // flatten the buckets back into the return array
-        $return = [];
-        foreach ($buckets as $q => $accepts) {
-            foreach ($accepts as $accept) {
-                $return[] = $accept;
+        $accept = [];
+        foreach ($buckets as $q => $bucket) {
+            foreach ($bucket as $spec) {
+                $accept[] = $spec;
             }
         }
 
         // done
-        return $return;
+        return $accept;
     }
 
-    protected function setAuth() : void
+    private function parseContent() : string
     {
-        if (isset($this->server['PHP_AUTH_PW'])) {
-            $this->authPw = $this->server['PHP_AUTH_PW'];
+        return file_get_contents('php://input');
+    }
+
+    private function parseContentLength() : string
+    {
+        return trim($this->headers['content-length']);
+    }
+
+    private function parseContentMd5() : string
+    {
+        return trim($this->headers['content-md5']);
+    }
+
+    private function parseContentType() : string
+    {
+        if (! isset($this->headers['content-type'])) {
+            return '';
         }
 
-        if (isset($this->server['PHP_AUTH_TYPE'])) {
-            $this->authType = $this->server['PHP_AUTH_TYPE'];
+        $parts = explode(';', $this->headers['content-type']);
+        return trim(array_shift($parts));
+    }
+
+    private function parseContentCharset() : string
+    {
+        if (! isset($this->headers['content-type'])) {
+            return '';
         }
 
-        if (isset($this->server['PHP_AUTH_USER'])) {
-            $this->authUser = $this->server['PHP_AUTH_USER'];
+        $parts = explode(';', $this->headers['content-type']);
+        array_shift($parts);
+        if (empty($parts)) {
+            return '';
         }
 
+        foreach ($parts as $part) {
+            $part = str_replace(' ', '', $part);
+            if (substr($part, 0, 8) === 'charset=') {
+                return trim(substr($part, 8));
+            }
+        }
+
+        return '';
+    }
+
+    private function parsePhpAuthPw() : string
+    {
+        return trim($this->server['PHP_AUTH_PW'] ?? '');
+    }
+
+    private function parsePhpAuthType() : string
+    {
+        return trim($this->server['PHP_AUTH_TYPE'] ?? '');
+    }
+
+    private function parsePhpAuthUser() : string
+    {
+        return trim($this->server['PHP_AUTH_USER'] ?? '');
+    }
+
+    private function parsePhpAuthDigest() : array
+    {
         if (! isset($this->server['PHP_AUTH_DIGEST'])) {
-            return;
+            return [];
         }
 
         /* modified from https://secure.php.net/manual/en/features.http-auth.php */
 
         $text = $this->server['PHP_AUTH_DIGEST'];
 
-        $data = [];
-        $need = [
+        $digest = [];
+        $missing = [
             'nonce' => true,
             'nc' => true,
             'cnonce' => true,
@@ -400,7 +461,7 @@ class ServerRequest
             'uri' => true,
             'response' => true,
         ];
-        $keys = implode('|', array_keys($need));
+        $keys = implode('|', array_keys($missing));
 
         preg_match_all(
             '@(' . $keys . ')=(?:([\'"])([^\2]+?)\2|([^\s,]+))@',
@@ -410,154 +471,20 @@ class ServerRequest
         );
 
         foreach ($matches as $m) {
-            $data[$m[1]] = $m[3] ? $m[3] : $m[4];
-            unset($need[$m[1]]);
+            $digest[$m[1]] = $m[3] ? $m[3] : $m[4];
+            unset($missing[$m[1]]);
         }
 
-        if (! $need) {
-            $this->authDigest = $data;
+        if (empty($missing)) {
+            return $digest;
         }
+
+        return [];
     }
 
-    protected function setContent() : void
+    private function parseRequestedWith() : string
     {
-        $content = file_get_contents('php://input');
-        if ($content) {
-            $this->content = $content;
-        }
-
-        if (isset($this->headers['content-md5'])) {
-            $this->contentMd5 = $this->headers['content-md5'];
-        }
-
-        if (isset($this->headers['content-length'])) {
-            $this->contentLength = $this->headers['content-length'];
-        }
-
-        if (! isset($this->headers['content-type'])) {
-            return;
-        }
-
-        $parts = explode(';', $this->headers['content-type']);
-        $this->contentType = array_shift($parts);
-
-        if (! $parts) {
-            return;
-        }
-
-        foreach ($parts as $part) {
-            $part = str_replace(' ', '', $part);
-            if (substr($part, 0, 8) === 'charset=') {
-                $this->contentCharset = substr($part, 8);
-                return;
-            }
-        }
-    }
-
-    protected function setUploads() : void
-    {
-        foreach ($this->files as $key => $spec) {
-            $this->uploads[$key] = $this->setUploadsFromSpec($spec);
-        }
-    }
-
-    protected function setUploadsFromSpec(array $spec) : array
-    {
-        if (is_array($spec['tmp_name'])) {
-            return $this->setUploadsFromNested($spec);
-        }
-
-        return $spec;
-    }
-
-    protected function setUploadsFromNested(array $nested) : array
-    {
-        $uploads = [];
-        $keys = array_keys($nested['tmp_name']);
-        foreach ($keys as $key) {
-            $spec = [
-                'error'    => $nested['error'][$key],
-                'name'     => $nested['name'][$key],
-                'size'     => $nested['size'][$key],
-                'tmp_name' => $nested['tmp_name'][$key],
-                'type'     => $nested['type'][$key],
-            ];
-            $uploads[$key] = $this->setUploadsFromSpec($spec);
-        }
-        return $uploads;
-    }
-
-    // application/json:
-    // $input = json_decode($request->content, true);
-    // $request = $request->withInput($input);
-    //
-    // application/x-www-form-urlencoded:
-    // parse_str($request->content, $input);
-    // $request = $request->withInput($input);
-    final public function withInput(/* mixed */ $input) // : static
-    {
-        $this->assertImmutable($input, '$input');
-        $clone = clone $this;
-        $clone->input = $input;
-        return $clone;
-    }
-
-    // sets one param
-    final public function withParam(string $key, /* mixed */ $val) // : static
-    {
-        $this->assertImmutable($val, '$params');
-        $clone = clone $this;
-        $clone->params[$key] = $val;
-        return $clone;
-    }
-
-    // sets all params
-    final public function withParams(array $params) // : static
-    {
-        $this->assertImmutable($params, '$params');
-        $clone = clone $this;
-        $clone->params = $params;
-        return $clone;
-    }
-
-    // removes one param
-    final public function withoutParam(string $key) // : static
-    {
-        $clone = clone $this;
-        unset($clone->params[$key]);
-        return $clone;
-    }
-
-    // removes multiple params
-    final public function withoutParams(array $keys = null) // : static
-    {
-        $clone = clone $this;
-
-        if (is_null($keys)) {
-            $clone->params = [];
-            return $clone;
-        }
-
-        foreach ($keys as $key) {
-            unset($clone->params[$key]);
-        }
-
-        return $clone;
-    }
-
-    // resets the url.
-    // note that this lets you set values that do not match other superglobals.
-    final public function withUrl(array $url) // : static
-    {
-        $this->assertImmutable($url, '$url');
-        $clone = clone $this;
-        foreach ($clone->url as $key => $val) {
-            $clone->url[$key] = null;
-            if (isset($url[$key])) {
-                $clone->url[$key] = $url[$key];
-            }
-        }
-        return $clone;
+        return trim($this->server['HTTP_X_REQUESTED_WITH'] ?? '');
     }
 
     final protected function assertImmutable(

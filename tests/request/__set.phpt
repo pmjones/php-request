@@ -1,16 +1,9 @@
 --TEST--
-ServerRequest::__set
---SKIPIF--
-<?php if (
-    ! extension_loaded('request')
-    && ! getenv('TEST_USERLAND_REQUEST')
-) {
-    die('skip ');
-} ?>
+SapiRequest::__set
 --FILE--
 <?php
 $_SERVER['HTTP_HOST'] = 'localhost';
-$request = new ServerRequest();
+$request = new SapiRequest($GLOBALS);
 try {
     $request->method = 'PATCH';
 } catch( Exception $e ) {
@@ -23,6 +16,6 @@ try {
 }
 --EXPECT--
 string(16) "RuntimeException"
-string(36) "ServerRequest::$method is read-only."
+string(34) "SapiRequest::$method is read-only."
 string(16) "RuntimeException"
-string(44) "ServerRequest::$noSuchProperty is read-only."
+string(44) "SapiRequest::$noSuchProperty does not exist."

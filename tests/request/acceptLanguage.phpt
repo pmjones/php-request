@@ -1,21 +1,19 @@
 --TEST--
-ServerRequest::$acceptLanguage
---SKIPIF--
-<?php if (
-    ! extension_loaded('request')
-    && ! getenv('TEST_USERLAND_REQUEST')
-) {
-    die('skip ');
-} ?>
+SapiRequest::$acceptLanguage
 --FILE--
 <?php
+$request = new SapiRequest([]);
+var_dump($request->acceptLanguage);
+
 $_SERVER += [
     'HTTP_HOST' => 'example.com',
     'HTTP_ACCEPT_LANGUAGE' => 'en-US, en-GB, en, *',
 ];
-$request = new ServerRequest();
+$request = new SapiRequest($GLOBALS);
 var_dump($request->acceptLanguage);
 --EXPECTF--
+array(0) {
+}
 array(4) {
   [0]=>
   array(5) {

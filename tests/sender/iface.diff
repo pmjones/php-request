@@ -1,0 +1,16 @@
+001+ 
+001- foo: bar
+002- baz: zim
+003+ Fatal error: Interface 'SapiResponseInterface' not found in /Users/pmjones/Code/pmjones/php-request/tests/MySapiResponse.inc on line 3
+004- foo
+005- int(400)
+006- array(4) {
+007-   [0]=>
+008-   string(8) "foo: bar"
+009-   [1]=>
+010-   string(8) "baz: zim"
+011-   [2]=>
+012-   string(30) "Set-Cookie: cookie1=v1%26%25v2"
+013-   [3]=>
+014-   string(38) "Content-type: text/html; charset=UTF-8"
+015- }

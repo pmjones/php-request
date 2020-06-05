@@ -1,0 +1,30 @@
+
+---- EXPECTED OUTPUT
+bool(true)
+array(1) {
+  ["foo-bar"]=>
+  string(3) "dib"
+}
+NULL
+array(2) {
+  ["foo-bar"]=>
+  string(3) "baz"
+  ["dib-zim"]=>
+  string(3) "gir"
+}
+array(1) {
+  ["dib-zim"]=>
+  string(3) "gir"
+}
+---- ACTUAL OUTPUT
+bool(false)
+array(1) {
+  ["foo-bar"]=>
+  string(3) "dib"
+}
+
+Fatal error: Uncaught Error: Call to undefined method SapiResponse::unsetHeaders() in /Users/pmjones/Code/pmjones/php-request/tests/response/setHeader.php:6
+Stack trace:
+#0 {main}
+  thrown in /Users/pmjones/Code/pmjones/php-request/tests/response/setHeader.php on line 6
+---- FAILED

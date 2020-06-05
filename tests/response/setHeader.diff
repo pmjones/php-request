@@ -1,0 +1,18 @@
+001+ bool(false)
+001- bool(true)
+006+ 
+007+ Fatal error: Uncaught Error: Call to undefined method SapiResponse::unsetHeaders() in /Users/pmjones/Code/pmjones/php-request/tests/response/setHeader.php:6
+008+ Stack trace:
+009+ #0 {main}
+010+   thrown in /Users/pmjones/Code/pmjones/php-request/tests/response/setHeader.php on line 6
+006- NULL
+007- array(2) {
+008-   ["foo-bar"]=>
+009-   string(3) "baz"
+010-   ["dib-zim"]=>
+011-   string(3) "gir"
+012- }
+013- array(1) {
+014-   ["dib-zim"]=>
+015-   string(3) "gir"
+016- }

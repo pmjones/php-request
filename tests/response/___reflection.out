@@ -1,0 +1,182 @@
+/**
+ * Mutable server-side response object.
+ */
+Class [ <user> class SapiResponse ] {
+  @@ /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php 7-161
+
+  - Constants [0] {
+  }
+
+  - Static properties [0] {
+  }
+
+  - Static methods [0] {
+  }
+
+  - Properties [6] {
+    Property [ <default> protected $version ]
+    Property [ <default> protected $status ]
+    Property [ <default> protected $headers ]
+    Property [ <default> protected $cookies ]
+    Property [ <default> protected $content ]
+    Property [ <default> protected $headerCallback ]
+  }
+
+  - Methods [15] {
+    Method [ <user> public method getVersion ] {
+      @@ /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php 16 - 19
+
+      - Parameters [0] {
+      }
+      - Return [ string ]
+    }
+
+    Method [ <user> public method setVersion ] {
+      @@ /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php 21 - 24
+
+      - Parameters [1] {
+        Parameter #0 [ <required> string $version ]
+      }
+      - Return [ void ]
+    }
+
+    Method [ <user> public method getStatus ] {
+      @@ /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php 26 - 29
+
+      - Parameters [0] {
+      }
+      - Return [ int ]
+    }
+
+    Method [ <user> public method setStatus ] {
+      @@ /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php 31 - 34
+
+      - Parameters [1] {
+        Parameter #0 [ <required> int $status ]
+      }
+    }
+
+    Method [ <user> public method getHeaders ] {
+      @@ /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php 36 - 39
+
+      - Parameters [0] {
+      }
+      - Return [ array ]
+    }
+
+    Method [ <user> public method getHeader ] {
+      @@ /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php 41 - 50
+
+      - Parameters [1] {
+        Parameter #0 [ <required> string $label ]
+      }
+      - Return [ string ]
+    }
+
+    Method [ <user> public method setHeader ] {
+      @@ /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php 52 - 70
+
+      - Parameters [2] {
+        Parameter #0 [ <required> string $label ]
+        Parameter #1 [ <required> string or NULL $value ]
+      }
+      - Return [ void ]
+    }
+
+    Method [ <user> public method addHeader ] {
+      @@ /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php 72 - 93
+
+      - Parameters [2] {
+        Parameter #0 [ <required> string $label ]
+        Parameter #1 [ <required> string or NULL $value ]
+      }
+      - Return [ void ]
+    }
+
+    Method [ <user> public method getCookies ] {
+      @@ /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php 95 - 98
+
+      - Parameters [0] {
+      }
+      - Return [ array ]
+    }
+
+    Method [ <user> public method setCookie ] {
+      @@ /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php 100 - 119
+
+      - Parameters [7] {
+        Parameter #0 [ <required> string $name ]
+        Parameter #1 [ <optional> string $value = '' ]
+        Parameter #2 [ <optional> int $expire = 0 ]
+        Parameter #3 [ <optional> string $path = '' ]
+        Parameter #4 [ <optional> string $domain = '' ]
+        Parameter #5 [ <optional> bool $secure = false ]
+        Parameter #6 [ <optional> bool $httponly = false ]
+      }
+      - Return [ void ]
+    }
+
+    Method [ <user> public method setRawCookie ] {
+      @@ /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php 121 - 140
+
+      - Parameters [7] {
+        Parameter #0 [ <required> string $name ]
+        Parameter #1 [ <optional> string $value = '' ]
+        Parameter #2 [ <optional> int $expire = 0 ]
+        Parameter #3 [ <optional> string $path = '' ]
+        Parameter #4 [ <optional> string $domain = '' ]
+        Parameter #5 [ <optional> bool $secure = false ]
+        Parameter #6 [ <optional> bool $httponly = false ]
+      }
+      - Return [ void ]
+    }
+
+    Method [ <user> public method getContent ] {
+      @@ /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php 142 - 145
+    }
+
+    Method [ <user> public method setContent ] {
+      @@ /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php 147 - 150
+
+      - Parameters [1] {
+        Parameter #0 [ <required> $content ]
+      }
+      - Return [ void ]
+    }
+
+    Method [ <user> public method setHeaderCallback ] {
+      @@ /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php 152 - 155
+
+      - Parameters [1] {
+        Parameter #0 [ <required> callable or NULL $headerCallback ]
+      }
+      - Return [ void ]
+    }
+
+    Method [ <user> public method getHeaderCallback ] {
+      @@ /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php 157 - 160
+
+      - Parameters [0] {
+      }
+      - Return [ callable or NULL ]
+    }
+  }
+}
+object(SapiResponse)#3 (6) {
+  ["version":protected]=>
+  string(3) "1.1"
+  ["status":protected]=>
+  int(200)
+  ["headers":protected]=>
+  array(0) {
+  }
+  ["cookies":protected]=>
+  array(0) {
+  }
+  ["content":protected]=>
+  NULL
+  ["headerCallback":protected]=>
+  NULL
+}
+array(0) {
+}

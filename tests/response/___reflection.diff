@@ -1,0 +1,276 @@
+001+ /**
+002+  * Mutable server-side response object.
+003+  */
+004+ Class [ <user> class SapiResponse ] {
+005+   @@ /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php 7-161
+001- Class [ <internal:request> class SapiResponse implements SapiResponseInterface ] {
+013-     Property [ <default> private $version ]
+014-     Property [ <default> private $code ]
+015-     Property [ <default> private $headers ]
+016-     Property [ <default> private $cookies ]
+017-     Property [ <default> private $content ]
+018-     Property [ <default> private $callbacks ]
+017+     Property [ <default> protected $version ]
+018+     Property [ <default> protected $status ]
+019+     Property [ <default> protected $headers ]
+020+     Property [ <default> protected $cookies ]
+021+     Property [ <default> protected $content ]
+022+     Property [ <default> protected $headerCallback ]
+021-   - Methods [23] {
+022-     Method [ <internal:request, prototype SapiResponseInterface> final public method setVersion ] {
+025+   - Methods [15] {
+026+     Method [ <user> public method getVersion ] {
+027+       @@ /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php 16 - 19
+028+ 
+029+       - Parameters [0] {
+030+       }
+031+       - Return [ string ]
+032+     }
+025-         Parameter #0 [ <required> string or NULL $version ]
+027-       - Return [ SapiResponseInterface ]
+030-     Method [ <internal:request, prototype SapiResponseInterface> final public method getVersion ] {
+034+     Method [ <user> public method setVersion ] {
+035+       @@ /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php 21 - 24
+036+ 
+034-       - Return [ string or NULL ]
+037-     Method [ <internal:request, prototype SapiResponseInterface> final public method setCode ] {
+038+         Parameter #0 [ <required> string $version ]
+040+       - Return [ void ]
+040-         Parameter #0 [ <required> int or NULL $code ]
+042-       - Return [ SapiResponseInterface ]
+043+     Method [ <user> public method getStatus ] {
+044+       @@ /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php 26 - 29
+045-     Method [ <internal:request, prototype SapiResponseInterface> final public method getCode ] {
+048+       - Return [ int ]
+049-       - Return [ int or NULL ]
+051+     Method [ <user> public method setStatus ] {
+052+       @@ /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php 31 - 34
+052-     Method [ <internal:request, prototype SapiResponseInterface> final public method setHeader ] {
+054-       - Parameters [2] {
+055+         Parameter #0 [ <required> int $status ]
+056-         Parameter #1 [ <required> string $value ]
+058-       - Return [ SapiResponseInterface ]
+059+     Method [ <user> public method getHeaders ] {
+060+       @@ /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php 36 - 39
+061-     Method [ <internal:request, prototype SapiResponseInterface> final public method addHeader ] {
+064+       - Return [ array ]
+065-         Parameter #1 [ <required> string $value ]
+067+     Method [ <user> public method getHeader ] {
+068+       @@ /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php 41 - 50
+067-       - Return [ SapiResponseInterface ]
+070+       - Parameters [1] {
+070-     Method [ <internal:request, prototype SapiResponseInterface> final public method unsetHeader ] {
+072-       - Parameters [1] {
+073+       - Return [ string ]
+075-       - Return [ SapiResponseInterface ]
+076+     Method [ <user> public method setHeader ] {
+077+       @@ /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php 52 - 70
+078-     Method [ <internal:request, prototype SapiResponseInterface> final public method getHeader ] {
+080-       - Parameters [1] {
+081-         Parameter #0 [ <required> string $label ]
+081+         Parameter #1 [ <required> string or NULL $value ]
+083+       - Return [ void ]
+083-       - Return [ string or NULL ]
+086+     Method [ <user> public method addHeader ] {
+087+       @@ /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php 72 - 93
+086-     Method [ <internal:request, prototype SapiResponseInterface> final public method hasHeader ] {
+088-       - Parameters [1] {
+089-         Parameter #0 [ <required> string $label ]
+089+       - Parameters [2] {
+091+         Parameter #1 [ <required> string or NULL $value ]
+091-       - Return [ bool ]
+093+       - Return [ void ]
+094-     Method [ <internal:request, prototype SapiResponseInterface> final public method unsetHeaders ] {
+096+     Method [ <user> public method getCookies ] {
+097+       @@ /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php 95 - 98
+096-       - Parameters [0] {
+098-       - Return [ SapiResponseInterface ]
+099+       - Parameters [0] {
+101+       - Return [ array ]
+101-     Method [ <internal:request, prototype SapiResponseInterface> final public method getHeaders ] {
+103-       - Parameters [0] {
+104+     Method [ <user> public method setCookie ] {
+105+       @@ /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php 100 - 119
+105-       - Return [ array or NULL ]
+107+       - Parameters [7] {
+108+         Parameter #0 [ <required> string $name ]
+109+         Parameter #1 [ <optional> string $value = '' ]
+110+         Parameter #2 [ <optional> int $expire = 0 ]
+111+         Parameter #3 [ <optional> string $path = '' ]
+112+         Parameter #4 [ <optional> string $domain = '' ]
+113+         Parameter #5 [ <optional> bool $secure = false ]
+114+         Parameter #6 [ <optional> bool $httponly = false ]
+108-     Method [ <internal:request, prototype SapiResponseInterface> final public method setCookie ] {
+110-       - Parameters [7] {
+111-         Parameter #0 [ <required> string $name ]
+112-         Parameter #1 [ <optional> string $value ]
+113-         Parameter #2 [ <optional> $expires_or_options ]
+114-         Parameter #3 [ <optional> string $path ]
+115-         Parameter #4 [ <optional> string $domain ]
+116-         Parameter #5 [ <optional> bool $secure ]
+117-         Parameter #6 [ <optional> bool $httponly ]
+118-       }
+119-       - Return [ SapiResponseInterface ]
+120-     }
+121- 
+122-     Method [ <internal:request, prototype SapiResponseInterface> final public method setRawCookie ] {
+123- 
+124-       - Parameters [7] {
+125-         Parameter #0 [ <required> string $name ]
+126-         Parameter #1 [ <optional> string $value ]
+127-         Parameter #2 [ <optional> $expires_or_options ]
+128-         Parameter #3 [ <optional> string $path ]
+129-         Parameter #4 [ <optional> string $domain ]
+130-         Parameter #5 [ <optional> bool $secure ]
+131-         Parameter #6 [ <optional> bool $httponly ]
+132-       }
+133-       - Return [ SapiResponseInterface ]
+116+       - Return [ void ]
+119+     Method [ <user> public method setRawCookie ] {
+120+       @@ /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php 121 - 140
+122+       - Parameters [7] {
+123+         Parameter #0 [ <required> string $name ]
+124+         Parameter #1 [ <optional> string $value = '' ]
+125+         Parameter #2 [ <optional> int $expire = 0 ]
+126+         Parameter #3 [ <optional> string $path = '' ]
+127+         Parameter #4 [ <optional> string $domain = '' ]
+128+         Parameter #5 [ <optional> bool $secure = false ]
+129+         Parameter #6 [ <optional> bool $httponly = false ]
+131+       - Return [ void ]
+134+     Method [ <user> public method getContent ] {
+135+       @@ /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php 142 - 145
+136+     }
+138+     Method [ <user> public method setContent ] {
+139+       @@ /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php 147 - 150
+140+ 
+141+       - Parameters [1] {
+142+         Parameter #0 [ <required> $content ]
+144+       - Return [ void ]
+147+     Method [ <user> public method setHeaderCallback ] {
+148+       @@ /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php 152 - 155
+149+ 
+150+       - Parameters [1] {
+151+         Parameter #0 [ <required> callable or NULL $headerCallback ]
+152+       }
+153+       - Return [ void ]
+154+     }
+155+ 
+156+     Method [ <user> public method getHeaderCallback ] {
+157+       @@ /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php 157 - 160
+159+       - Parameters [0] {
+160+       }
+161+       - Return [ callable or NULL ]
+162+     }
+163+   }
+164+ }
+165+ object(SapiResponse)#3 (6) {
+166+   ["version":protected]=>
+167+   string(3) "1.1"
+168+   ["status":protected]=>
+169+   int(200)
+170+   ["headers":protected]=>
+171+   array(0) {
+172+   }
+173+   ["cookies":protected]=>
+174+   array(0) {
+175+   }
+176+   ["content":protected]=>
+177+   NULL
+178+   ["headerCallback":protected]=>
+179+   NULL
+180+ }
+181+ array(0) {
+182+ }
+134-     }
+135- 
+136-     Method [ <internal:request, prototype SapiResponseInterface> final public method unsetCookie ] {
+137- 
+138-       - Parameters [1] {
+139-         Parameter #0 [ <required> string $name ]
+140-       }
+141-       - Return [ SapiResponseInterface ]
+142-     }
+143- 
+144-     Method [ <internal:request, prototype SapiResponseInterface> final public method unsetCookies ] {
+145- 
+146-       - Parameters [0] {
+147-       }
+148-       - Return [ SapiResponseInterface ]
+149-     }
+150- 
+151-     Method [ <internal:request, prototype SapiResponseInterface> final public method getCookie ] {
+152- 
+153-       - Parameters [1] {
+154-         Parameter #0 [ <required> string $name ]
+155-       }
+156-       - Return [ array or NULL ]
+157-     }
+158- 
+159-     Method [ <internal:request, prototype SapiResponseInterface> final public method hasCookie ] {
+160- 
+161-       - Parameters [1] {
+162-         Parameter #0 [ <required> string $name ]
+163-       }
+164-       - Return [ bool ]
+165-     }
+166- 
+167-     Method [ <internal:request, prototype SapiResponseInterface> final public method getCookies ] {
+168- 
+169-       - Parameters [0] {
+170-       }
+171-       - Return [ array or NULL ]
+172-     }
+173- 
+174-     Method [ <internal:request, prototype SapiResponseInterface> final public method setContent ] {
+175- 
+176-       - Parameters [1] {
+177-         Parameter #0 [ <required> $content ]
+178-       }
+179-       - Return [ SapiResponseInterface ]
+180-     }
+181- 
+182-     Method [ <internal:request, prototype SapiResponseInterface> final public method getContent ] {
+183- 
+184-       - Parameters [0] {
+185-       }
+186-     }
+187- 
+188-     Method [ <internal:request, prototype SapiResponseInterface> final public method setHeaderCallbacks ] {
+189- 
+190-       - Parameters [1] {
+191-         Parameter #0 [ <required> array $callbacks ]
+192-       }
+193-       - Return [ SapiResponseInterface ]
+194-     }
+195- 
+196-     Method [ <internal:request, prototype SapiResponseInterface> final public method addHeaderCallback ] {
+197- 
+198-       - Parameters [1] {
+199-         Parameter #0 [ <required> callable $callback ]
+200-       }
+201-       - Return [ SapiResponseInterface ]
+202-     }
+203- 
+204-     Method [ <internal:request, prototype SapiResponseInterface> final public method getHeaderCallbacks ] {
+205- 
+206-       - Parameters [0] {
+207-       }
+208-       - Return [ array or NULL ]
+209-     }
+210-   }
+211- }
+212- object(SapiResponse)#1 (6) {
+213-   ["version":"SapiResponse":private]=>
+214-   NULL
+215-   ["code":"SapiResponse":private]=>
+216-   NULL
+217-   ["headers":"SapiResponse":private]=>
+218-   NULL
+219-   ["cookies":"SapiResponse":private]=>
+220-   NULL
+221-   ["content":"SapiResponse":private]=>
+222-   NULL
+223-   ["callbacks":"SapiResponse":private]=>
+224-   NULL
+225- }
+226- NULL

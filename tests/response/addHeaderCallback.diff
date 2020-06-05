@@ -1,0 +1,10 @@
+001+ Fatal error: Uncaught Error: Call to undefined method SapiResponse::getHeaderCallbacks() in /Users/pmjones/Code/pmjones/php-request/tests/response/addHeaderCallback.php:4
+002+ Stack trace:
+003+ #0 {main}
+004+   thrown in /Users/pmjones/Code/pmjones/php-request/tests/response/addHeaderCallback.php on line 4
+001- bool(true)
+002- bool(false)
+003- int(1)
+004- bool(true)
+005- int(2)
+006- bool(true)

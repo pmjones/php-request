@@ -1,0 +1,15 @@
+object(ExtResponse)#1 (6) {
+  ["version":"SapiResponse":private]=>
+  NULL
+  ["code":"SapiResponse":private]=>
+  NULL
+  ["headers":"SapiResponse":private]=>
+  NULL
+  ["cookies":"SapiResponse":private]=>
+  NULL
+  ["content":"SapiResponse":private]=>
+  NULL
+  ["callbacks":"SapiResponse":private]=>
+  NULL
+}
+NULL

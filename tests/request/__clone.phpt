@@ -1,17 +1,10 @@
 --TEST--
-ServerRequest::__clone
---SKIPIF--
-<?php if (
-    ! extension_loaded('request')
-    && ! getenv('TEST_USERLAND_REQUEST')
-) {
-    die('skip ');
-} ?>
+SapiRequest::__clone
 --FILE--
 <?php
 $_SERVER['HTTP_HOST'] = 'localhost';
 
-$request = new ServerRequest();
+$request = new SapiRequest($GLOBALS);
 
 $_SERVER['HTTP_HOST'] = 'example.com';
 $clone = clone $request;

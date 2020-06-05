@@ -1,19 +1,12 @@
 --TEST--
-ServerRequest::$accept
---SKIPIF--
-<?php if (
-    ! extension_loaded('request')
-    && ! getenv('TEST_USERLAND_REQUEST')
-) {
-    die('skip ');
-} ?>
+SapiRequest::$accept
 --FILE--
 <?php
 $_SERVER += [
     'HTTP_HOST' => 'example.com',
     'HTTP_ACCEPT' => 'application/xml;q=0.8, application/json;foo=bar, text/*;q=0.2, */*;q=0.1',
 ];
-$request = new ServerRequest();
+$request = new SapiRequest($GLOBALS);
 var_dump($request->accept);
 --EXPECTF--
 array(4) {

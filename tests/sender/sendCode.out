@@ -1,0 +1,4 @@
+Fatal error: Uncaught Error: Call to undefined method SapiResponse::setCode() in /Users/pmjones/Code/pmjones/php-request/tests/sender/sendCode.php:3
+Stack trace:
+#0 {main}
+  thrown in /Users/pmjones/Code/pmjones/php-request/tests/sender/sendCode.php on line 3

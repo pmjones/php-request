@@ -1,12 +1,5 @@
 --TEST--
-ServerRequest::$headers
---SKIPIF--
-<?php if (
-    ! extension_loaded('request')
-    && ! getenv('TEST_USERLAND_REQUEST')
-) {
-    die('skip ');
-} ?>
+SapiRequest::$headers
 --FILE--
 <?php
 $_SERVER = [
@@ -16,7 +9,7 @@ $_SERVER = [
     'CONTENT_LENGTH' => '123',
     'CONTENT_TYPE' => 'text/plain',
 ];
-$request = new ServerRequest();
+$request = new SapiRequest($GLOBALS);
 var_dump($request->headers);
 --EXPECT--
 array(4) {

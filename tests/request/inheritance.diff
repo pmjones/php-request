@@ -1,0 +1,11 @@
+006+ 
+007+ Fatal error: Uncaught RuntimeException: MagicSapiRequest::$magicTest is read-only. in /Users/pmjones/Code/pmjones/php-request/src/SapiRequest.php:125
+008+ Stack trace:
+009+ #0 /Users/pmjones/Code/pmjones/php-request/tests/request/inheritance.php(39): SapiRequest->__set('magicTest', 'baz')
+010+ #1 {main}
+006- string(3) "baz"
+007- string(3) "bat"
+008- ok
+009- string(16) "RuntimeException"
+010- string(38) "CtorSapiRequest::$method is read-only."
+011+   thrown in /Users/pmjones/Code/pmjones/php-request/src/SapiRequest.php on line 125

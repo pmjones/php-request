@@ -1,0 +1,10 @@
+
+---- EXPECTED OUTPUT
+string(3) "baz"
+string(3) "baz"
+NULL
+---- ACTUAL OUTPUT
+string(3) "baz"
+string(3) "baz"
+string(0) ""
+---- FAILED

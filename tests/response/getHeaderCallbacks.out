@@ -1,0 +1,4 @@
+Fatal error: Uncaught Error: Call to undefined method SapiResponse::setHeaderCallbacks() in /Users/pmjones/Code/pmjones/php-request/tests/response/getHeaderCallbacks.php:4
+Stack trace:
+#0 {main}
+  thrown in /Users/pmjones/Code/pmjones/php-request/tests/response/getHeaderCallbacks.php on line 4

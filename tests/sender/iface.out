@@ -1,0 +1,3 @@
+
+--HEADERS--
+Fatal error: Interface 'SapiResponseInterface' not found in /Users/pmjones/Code/pmjones/php-request/tests/MySapiResponse.inc on line 3

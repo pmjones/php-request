@@ -1,0 +1,2 @@
+string(16) "RuntimeException"
+string(31) "SapiUpload::$name is read-only."

@@ -1,16 +1,10 @@
 --TEST--
-ServerResponse::setContent
---SKIPIF--
-<?php if (
-    ! extension_loaded('request')
-    && ! getenv('TEST_USERLAND_REQUEST')
-) {
-    die('skip ');
-} ?>
+SapiResponse::setContent
 --FILE--
 <?php
-$response = new ServerResponse();
-$response->setContent('foo');
+$response = new SapiResponse();
+var_dump($response->setContent('foo') === $response);
 var_dump($response->getContent());
 --EXPECT--
+bool(true)
 string(3) "foo"

@@ -1,0 +1,19 @@
+
+---- EXPECTED OUTPUT
+foo: bar
+baz: dib, zim
+--HEADERS--
+array(2) {
+  [0]=>
+  string(8) "foo: bar"
+  [1]=>
+  string(13) "baz: dib, zim"
+}
+---- ACTUAL OUTPUT
+
+--HEADERS--
+Fatal error: Uncaught Error: Call to undefined method SapiResponse::addHeaderCallback() in /Users/pmjones/Code/pmjones/php-request/tests/sender/runHeaderCallbacks.php:3
+Stack trace:
+#0 {main}
+  thrown in /Users/pmjones/Code/pmjones/php-request/tests/sender/runHeaderCallbacks.php on line 3
+---- FAILED

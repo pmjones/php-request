@@ -1,0 +1,3 @@
+001+ Recoverable fatal error: Object of class Generator could not be converted to string in /Users/pmjones/Code/pmjones/php-request/src/SapiResponseSender.php on line 81
+001- foo
+002- failure

@@ -1,0 +1,91 @@
+Class [ <user> class SapiUpload ] {
+  @@ /Users/pmjones/Code/pmjones/php-request/src/SapiUpload.php 4-72
+
+  - Constants [0] {
+  }
+
+  - Static properties [0] {
+  }
+
+  - Static methods [0] {
+  }
+
+  - Properties [5] {
+    Property [ <default> public $name ]
+    Property [ <default> public $type ]
+    Property [ <default> public $size ]
+    Property [ <default> public $tmpName ]
+    Property [ <default> public $error ]
+  }
+
+  - Methods [6] {
+    Method [ <user, ctor> public method __construct ] {
+      @@ /Users/pmjones/Code/pmjones/php-request/src/SapiUpload.php 16 - 28
+
+      - Parameters [5] {
+        Parameter #0 [ <required> string or NULL $name ]
+        Parameter #1 [ <required> string or NULL $type ]
+        Parameter #2 [ <required> int or NULL $size ]
+        Parameter #3 [ <required> string or NULL $tmpName ]
+        Parameter #4 [ <required> int or NULL $error ]
+      }
+    }
+
+    Method [ <user> final public method __get ] {
+      @@ /Users/pmjones/Code/pmjones/php-request/src/SapiUpload.php 30 - 38
+
+      - Parameters [1] {
+        Parameter #0 [ <required> string $key ]
+      }
+    }
+
+    Method [ <user> final public method __set ] {
+      @@ /Users/pmjones/Code/pmjones/php-request/src/SapiUpload.php 40 - 49
+
+      - Parameters [2] {
+        Parameter #0 [ <required> string $key ]
+        Parameter #1 [ <required> $val ]
+      }
+      - Return [ void ]
+    }
+
+    Method [ <user> final public method __isset ] {
+      @@ /Users/pmjones/Code/pmjones/php-request/src/SapiUpload.php 51 - 58
+
+      - Parameters [1] {
+        Parameter #0 [ <required> string $key ]
+      }
+      - Return [ bool ]
+    }
+
+    Method [ <user> final public method __unset ] {
+      @@ /Users/pmjones/Code/pmjones/php-request/src/SapiUpload.php 60 - 66
+
+      - Parameters [1] {
+        Parameter #0 [ <required> string $key ]
+      }
+      - Return [ void ]
+    }
+
+    Method [ <user> final public method move ] {
+      @@ /Users/pmjones/Code/pmjones/php-request/src/SapiUpload.php 68 - 71
+
+      - Parameters [1] {
+        Parameter #0 [ <required> string $destination ]
+      }
+      - Return [ bool ]
+    }
+  }
+}
+object(SapiUpload)#3 (5) {
+  ["name"]=>
+  NULL
+  ["type"]=>
+  NULL
+  ["size"]=>
+  NULL
+  ["tmpName"]=>
+  NULL
+  ["error"]=>
+  NULL
+}

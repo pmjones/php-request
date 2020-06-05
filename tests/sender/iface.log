@@ -1,0 +1,22 @@
+
+---- EXPECTED OUTPUT
+foo: bar
+baz: zim
+--HEADERS--
+foo
+int(400)
+array(4) {
+  [0]=>
+  string(8) "foo: bar"
+  [1]=>
+  string(8) "baz: zim"
+  [2]=>
+  string(30) "Set-Cookie: cookie1=v1%26%25v2"
+  [3]=>
+  string(38) "Content-type: text/html; charset=UTF-8"
+}
+---- ACTUAL OUTPUT
+
+--HEADERS--
+Fatal error: Interface 'SapiResponseInterface' not found in /Users/pmjones/Code/pmjones/php-request/tests/MySapiResponse.inc on line 3
+---- FAILED

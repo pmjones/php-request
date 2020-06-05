@@ -1,0 +1,5 @@
+001+ Fatal error: Uncaught Error: Call to undefined method SapiResponse::getCode() in /Users/pmjones/Code/pmjones/php-request/tests/response/getCode.php:3
+001- NULL
+002+ Stack trace:
+003+ #0 {main}
+004+   thrown in /Users/pmjones/Code/pmjones/php-request/tests/response/getCode.php on line 3

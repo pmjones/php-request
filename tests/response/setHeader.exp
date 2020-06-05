@@ -1,0 +1,16 @@
+bool(true)
+array(1) {
+  ["foo-bar"]=>
+  string(3) "dib"
+}
+NULL
+array(2) {
+  ["foo-bar"]=>
+  string(3) "baz"
+  ["dib-zim"]=>
+  string(3) "gir"
+}
+array(1) {
+  ["dib-zim"]=>
+  string(3) "gir"
+}

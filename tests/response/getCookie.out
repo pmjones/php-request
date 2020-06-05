@@ -1,0 +1,4 @@
+Fatal error: Uncaught Error: Call to undefined method SapiResponse::getCookie() in /Users/pmjones/Code/pmjones/php-request/tests/response/getCookie.php:4
+Stack trace:
+#0 {main}
+  thrown in /Users/pmjones/Code/pmjones/php-request/tests/response/getCookie.php on line 4

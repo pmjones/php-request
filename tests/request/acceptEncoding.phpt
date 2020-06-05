@@ -1,19 +1,12 @@
 --TEST--
-ServerRequest::$acceptEncoding
---SKIPIF--
-<?php if (
-    ! extension_loaded('request')
-    && ! getenv('TEST_USERLAND_REQUEST')
-) {
-    die('skip ');
-} ?>
+SapiRequest::$acceptEncoding
 --FILE--
 <?php
 $_SERVER += [
     'HTTP_HOST' => 'example.com',
     'HTTP_ACCEPT_ENCODING' => 'compress;q=0.5, gzip;q=1.0',
 ];
-$request = new ServerRequest();
+$request = new SapiRequest($GLOBALS);
 var_dump($request->acceptEncoding);
 --EXPECTF--
 array(2) {

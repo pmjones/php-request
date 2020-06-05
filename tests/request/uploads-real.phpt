@@ -1,12 +1,5 @@
 --TEST--
-ServerRequest::$uploads (real)
---SKIPIF--
-<?php if (
-    ! extension_loaded('request')
-    && ! getenv('TEST_USERLAND_REQUEST')
-) {
-    die('skip ');
-} ?>
+SapiRequest::$uploads (real)
 --POST_RAW--
 Content-Type: multipart/form-data; boundary=---------------------------20896060251896012921717172737
 -----------------------------20896060251896012921717172737
@@ -28,51 +21,68 @@ Content-Disposition: form-data; name="file3"; filename="C:\foo\bar/file3.txt"
 Content-Type: text/plain-file3;
 
 3
+-----------------------------20896060251896012921717172737
+Content-Disposition: form-data; name="file4"; filename="file4.txt"
+
+4
 -----------------------------20896060251896012921717172737--
 --FILE--
 <?php
 $_SERVER['HTTP_HOST'] = 'example.com';
-$request = new ServerRequest();
+$request = new SapiRequest($GLOBALS);
 var_dump($request->uploads);
 --EXPECTF--
-array(3) {
+array(4) {
   ["file1"]=>
-  array(5) {
+  object(SapiUpload)#%d (5) {
     ["name"]=>
     string(9) "file1.txt"
     ["type"]=>
     string(16) "text/plain-file1"
-    ["tmp_name"]=>
+    ["size"]=>
+    int(1)
+    ["tmpName"]=>
     string(%d) "%s"
     ["error"]=>
     int(0)
-    ["size"]=>
-    int(1)
   }
   ["file2"]=>
-  array(5) {
+  object(SapiUpload)#%d (5) {
     ["name"]=>
     string(9) "file2.txt"
     ["type"]=>
     string(0) ""
-    ["tmp_name"]=>
+    ["size"]=>
+    int(0)
+    ["tmpName"]=>
     string(0) ""
     ["error"]=>
     int(2)
-    ["size"]=>
-    int(0)
   }
   ["file3"]=>
-  array(5) {
+  object(SapiUpload)#%d (5) {
     ["name"]=>
     string(9) "file3.txt"
     ["type"]=>
     string(16) "text/plain-file3"
-    ["tmp_name"]=>
+    ["size"]=>
+    int(1)
+    ["tmpName"]=>
     string(%d) "%s"
     ["error"]=>
     int(0)
+  }
+  ["file4"]=>
+  object(SapiUpload)#%d (5) {
+    ["name"]=>
+    string(9) "file4.txt"
+    ["type"]=>
+    string(0) ""
     ["size"]=>
     int(1)
+    ["tmpName"]=>
+    string(%d) "%s"
+    ["error"]=>
+    int(0)
   }
 }

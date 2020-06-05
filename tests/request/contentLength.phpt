@@ -1,24 +1,30 @@
 --TEST--
-ServerRequest::$contentLength
---SKIPIF--
-<?php if (
-    ! extension_loaded('request')
-    && ! getenv('TEST_USERLAND_REQUEST')
-) {
-    die('skip ');
-} ?>
+SapiRequest::$contentLength
 --FILE--
 <?php
-$_SERVER = [
-    'HTTP_HOST' => 'example.com',
-    'HTTP_CONTENT_LENGTH' => '123',
-];
-$request = new ServerRequest();
+$request = new SapiRequest($GLOBALS);
 var_dump($request->contentLength);
 
-unset($_SERVER['HTTP_CONTENT_LENGTH']);
-$request = new ServerRequest();
-var_dump($request->contentMd5);
+$_SERVER = [
+    'HTTP_CONTENT_LENGTH' => '123',
+];
+$request = new SapiRequest($GLOBALS);
+var_dump($request->contentLength);
+
+$_SERVER = [
+    'HTTP_CONTENT_LENGTH' => '123.456',
+];
+$request = new SapiRequest($GLOBALS);
+var_dump($request->contentLength);
+
+$_SERVER = [
+    'HTTP_CONTENT_LENGTH' => 'non-integer',
+];
+$request = new SapiRequest($GLOBALS);
+var_dump($request->contentLength);
+
 --EXPECT--
-string(3) "123"
+NULL
+int(123)
+NULL
 NULL

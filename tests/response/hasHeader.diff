@@ -1,0 +1,7 @@
+001+ Fatal error: Uncaught Error: Call to undefined method SapiResponse::hasHeader() in /Users/pmjones/Code/pmjones/php-request/tests/response/hasHeader.php:4
+002+ Stack trace:
+003+ #0 {main}
+001- bool(true)
+002- bool(true)
+003- bool(false)
+004+   thrown in /Users/pmjones/Code/pmjones/php-request/tests/response/hasHeader.php on line 4

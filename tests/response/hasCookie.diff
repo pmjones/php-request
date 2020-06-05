@@ -1,0 +1,6 @@
+001+ Fatal error: Uncaught Error: Call to undefined method SapiResponse::hasCookie() in /Users/pmjones/Code/pmjones/php-request/tests/response/hasCookie.php:4
+002+ Stack trace:
+001- bool(true)
+002- bool(false)
+003+ #0 {main}
+004+   thrown in /Users/pmjones/Code/pmjones/php-request/tests/response/hasCookie.php on line 4

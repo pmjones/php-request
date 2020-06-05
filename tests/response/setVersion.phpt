@@ -1,16 +1,10 @@
 --TEST--
-ServerResponse::setVersion
---SKIPIF--
-<?php if (
-    ! extension_loaded('request')
-    && ! getenv('TEST_USERLAND_REQUEST')
-) {
-    die('skip ');
-} ?>
+SapiResponse::setVersion
 --FILE--
 <?php
-$response = new ServerResponse();
-$response->setVersion('1.0');
+$response = new SapiResponse();
+var_dump($response->setVersion('1.1') === $response);
 var_dump($response->getVersion());
 --EXPECT--
-string(3) "1.0"
+bool(true)
+string(3) "1.1"

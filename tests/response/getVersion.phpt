@@ -1,15 +1,8 @@
 --TEST--
-ServerResponse::getVersion
---SKIPIF--
-<?php if (
-    ! extension_loaded('request')
-    && ! getenv('TEST_USERLAND_REQUEST')
-) {
-    die('skip ');
-} ?>
+SapiResponse::getVersion
 --FILE--
 <?php
-$response = new ServerResponse();
+$response = new SapiResponse();
 var_dump($response->getVersion());
 --EXPECT--
-string(3) "1.1"
+NULL

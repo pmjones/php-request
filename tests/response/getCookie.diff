@@ -1,0 +1,23 @@
+001+ Fatal error: Uncaught Error: Call to undefined method SapiResponse::getCookie() in /Users/pmjones/Code/pmjones/php-request/tests/response/getCookie.php:4
+002+ Stack trace:
+003+ #0 {main}
+004+   thrown in /Users/pmjones/Code/pmjones/php-request/tests/response/getCookie.php on line 4
+001- array(8) {
+002-   ["value"]=>
+003-   string(6) "v1&%v2"
+004-   ["expires"]=>
+005-   int(0)
+006-   ["path"]=>
+007-   string(0) ""
+008-   ["domain"]=>
+009-   string(0) ""
+010-   ["secure"]=>
+011-   bool(false)
+012-   ["httponly"]=>
+013-   bool(false)
+014-   ["samesite"]=>
+015-   string(0) ""
+016-   ["url_encode"]=>
+017-   bool(true)
+018- }
+019- NULL

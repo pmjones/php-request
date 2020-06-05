@@ -1,16 +1,10 @@
 --TEST--
-ServerRequest::__unset
---SKIPIF--
-<?php if (
-    ! extension_loaded('request')
-    && ! getenv('TEST_USERLAND_REQUEST')
-) {
-    die('skip ');
-} ?>
+SapiRequest::__unset
 --FILE--
 <?php
 $_SERVER['HTTP_HOST'] = 'localhost';
-$request = new ServerRequest();
+$request = new SapiRequest($GLOBALS);
+unset($request->no_such_prop);
 try {
     unset($request->method);
 } catch( Exception $e ) {
@@ -18,4 +12,4 @@ try {
 }
 --EXPECT--
 string(16) "RuntimeException"
-string(36) "ServerRequest::$method is read-only."
+string(34) "SapiRequest::$method is read-only."

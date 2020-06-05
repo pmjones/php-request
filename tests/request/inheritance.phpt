@@ -6,6 +6,7 @@ $_SERVER = [
     'HTTP_HOST' => 'example.com',
     'REQUEST_METHOD' => 'PUT',
 ];
+
 class SubSapiRequest extends SapiRequest {
     public $publicTest;
     protected $protectedTest;
@@ -19,30 +20,39 @@ class SubSapiRequest extends SapiRequest {
         $this->method = 'PATCH';
     }
 }
-class MagicSapiRequest extends SapiRequest {
-    protected $magicTest;
-}
+
+// class MagicSapiRequest extends SapiRequest {
+//     protected $magicTest;
+// }
+
 class CtorSapiRequest extends SapiRequest {
     public function __construct(array $globals = null) {
         parent::__construct($globals);
         $this->method = 'FOO';
     }
 }
+
 $request = new SubSapiRequest($GLOBALS);
 var_dump($request->method);
+
 $request->publicTest = 'foo';
 var_dump($request->publicTest);
 var_dump($request->protectedTest('bar'));
+
 try {
     $request->parentReadOnlyTest();
 } catch( Exception $e ) {
     var_dump(get_class($e), $e->getMessage());
 }
-$request = new MagicSapiRequest($GLOBALS);
-$request->magicTest = 'baz';
-var_dump($request->magicTest);
-$request->magicTestUndef = 'bat';
-var_dump($request->magicTestUndef);
+
+// $request = new MagicSapiRequest($GLOBALS);
+// $request->magicTest = 'baz';
+// var_dump($request->magicTest);
+// string(3) "baz"
+
+// $request->magicTestUndef = 'bat';
+// var_dump($request->magicTestUndef);
+// string(3) "bat"
 
 // Make sure cloning keeps readonly
 $clone = clone $request;
@@ -66,8 +76,6 @@ string(3) "foo"
 string(3) "bar"
 string(16) "RuntimeException"
 string(37) "SubSapiRequest::$method is read-only."
-string(3) "baz"
-string(3) "bat"
 ok
 string(16) "RuntimeException"
 string(38) "CtorSapiRequest::$method is read-only."

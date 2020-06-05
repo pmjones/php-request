@@ -434,7 +434,10 @@ class SapiRequest
         }
 
         $type = array_shift($parts);
-        $this->contentType = $type;
+        $regex = "/^[!#$%&'*+.^_`|~0-9A-Za-z-]+\/[!#$%&'*+.^_`|~0-9A-Za-z-]+$/";
+        if (preg_match($regex, $type) === 1) {
+            $this->contentType = $type;
+        }
     }
 
     private function setContentCharset() : void

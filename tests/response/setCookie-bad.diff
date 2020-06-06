@@ -1,9 +1,0 @@
-001+ Fatal error: Uncaught TypeError: Argument 3 passed to SapiResponse::setCookie() must be of the type int, array given, called in /Users/pmjones/Code/pmjones/php-request/tests/response/setCookie-bad.php on line 3 and defined in /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php:100
-002+ Stack trace:
-003+ #0 /Users/pmjones/Code/pmjones/php-request/tests/response/setCookie-bad.php(3): SapiResponse->setCookie('cookie1', 'value1', Array)
-004+ #1 {main}
-001- Warning: SapiResponse::setCookie(): Unrecognized key 'nosuchoption' found in the options array in %ssetCookie-bad.php on line %d
-002- 
-003- Warning: SapiResponse::setCookie(): No valid options were found in the given array in %ssetCookie-bad.php on line %d
-004- Cannot pass arguments after the options array
-005+   thrown in /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php on line 100

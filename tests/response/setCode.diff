@@ -1,7 +1,0 @@
-001+ Fatal error: Uncaught Error: Call to undefined method SapiResponse::setCode() in /Users/pmjones/Code/pmjones/php-request/tests/response/setCode.php:3
-002+ Stack trace:
-003+ #0 {main}
-001- bool(true)
-002- int(500)
-003- int(401)
-004+   thrown in /Users/pmjones/Code/pmjones/php-request/tests/response/setCode.php on line 3

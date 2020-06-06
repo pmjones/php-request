@@ -1,5 +1,0 @@
-Fatal error: Uncaught TypeError: Argument 3 passed to SapiResponse::setCookie() must be of the type int, array given, called in /Users/pmjones/Code/pmjones/php-request/tests/response/setCookie-bad.php on line 3 and defined in /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php:100
-Stack trace:
-#0 /Users/pmjones/Code/pmjones/php-request/tests/response/setCookie-bad.php(3): SapiResponse->setCookie('cookie1', 'value1', Array)
-#1 {main}
-  thrown in /Users/pmjones/Code/pmjones/php-request/src/SapiResponse.php on line 100

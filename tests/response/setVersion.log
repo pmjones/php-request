@@ -1,8 +1,0 @@
-
----- EXPECTED OUTPUT
-bool(true)
-string(3) "1.1"
----- ACTUAL OUTPUT
-bool(false)
-string(3) "1.1"
----- FAILED

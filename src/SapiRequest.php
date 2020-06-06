@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 /**
- * Read-only server-side request object.
+ * Read-only SAPI request object.
  *
  * @property-read $accept
  * @property-read $acceptCharset

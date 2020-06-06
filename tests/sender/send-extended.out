@@ -1,3 +1,6 @@
-content
-array(0) {
-}
+Fatal error: Uncaught Error: Call to undefined method ExtResponse::getHeaderCallback() in /Users/pmjones/Code/pmjones/php-request/src/SapiResponseSender.php:20
+Stack trace:
+#0 /Users/pmjones/Code/pmjones/php-request/src/SapiResponseSender.php(11): SapiResponseSender->registerHeaderCallback(Object(ExtResponse))
+#1 /Users/pmjones/Code/pmjones/php-request/tests/sender/send-extended.php(9): SapiResponseSender->send(Object(ExtResponse))
+#2 {main}
+  thrown in /Users/pmjones/Code/pmjones/php-request/src/SapiResponseSender.php on line 20

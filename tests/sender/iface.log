@@ -18,5 +18,9 @@ array(4) {
 ---- ACTUAL OUTPUT
 
 --HEADERS--
-Fatal error: Interface 'SapiResponseInterface' not found in /Users/pmjones/Code/pmjones/php-request/tests/MySapiResponse.inc on line 3
+Fatal error: Uncaught TypeError: Argument 1 passed to SapiResponseSender::send() must be an instance of SapiResponse, instance of MySapiResponse given, called in /Users/pmjones/Code/pmjones/php-request/tests/sender/iface.php on line 11 and defined in /Users/pmjones/Code/pmjones/php-request/src/SapiResponseSender.php:6
+Stack trace:
+#0 /Users/pmjones/Code/pmjones/php-request/tests/sender/iface.php(11): SapiResponseSender->send(Object(MySapiResponse))
+#1 {main}
+  thrown in /Users/pmjones/Code/pmjones/php-request/src/SapiResponseSender.php on line 6
 ---- FAILED

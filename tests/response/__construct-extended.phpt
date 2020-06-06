@@ -12,7 +12,7 @@ $ext = new ExtResponse();
 var_dump($ext);
 var_dump($ext->getHeaders());
 --EXPECT--
-object(ExtResponse)#1 (6) {
+object(ExtResponse)#3 (6) {
   ["version":"SapiResponse":private]=>
   NULL
   ["code":"SapiResponse":private]=>

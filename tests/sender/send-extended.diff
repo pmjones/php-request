@@ -1,4 +1,10 @@
-002+ array(0) {
+001+ Fatal error: Uncaught Error: Call to undefined method ExtResponse::getHeaderCallback() in /Users/pmjones/Code/pmjones/php-request/src/SapiResponseSender.php:20
+002+ Stack trace:
+003+ #0 /Users/pmjones/Code/pmjones/php-request/src/SapiResponseSender.php(11): SapiResponseSender->registerHeaderCallback(Object(ExtResponse))
+004+ #1 /Users/pmjones/Code/pmjones/php-request/tests/sender/send-extended.php(9): SapiResponseSender->send(Object(ExtResponse))
+005+ #2 {main}
+006+   thrown in /Users/pmjones/Code/pmjones/php-request/src/SapiResponseSender.php on line 20
+001- content
 002- array(3) {
 003-   [0]=>
 004-   string(8) "foo: bar"
@@ -6,3 +12,4 @@
 006-   string(19) "Set-Cookie: baz=dib"
 007-   [2]=>
 008-   string(38) "Content-type: text/html; charset=UTF-8"
+009- }

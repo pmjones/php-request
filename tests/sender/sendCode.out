@@ -1,4 +1,6 @@
-Fatal error: Uncaught Error: Call to undefined method SapiResponse::setCode() in /Users/pmjones/Code/pmjones/php-request/tests/sender/sendCode.php:3
+Fatal error: Uncaught Error: Call to undefined method SapiResponse::getHeaderCallback() in /Users/pmjones/Code/pmjones/php-request/src/SapiResponseSender.php:20
 Stack trace:
-#0 {main}
-  thrown in /Users/pmjones/Code/pmjones/php-request/tests/sender/sendCode.php on line 3
+#0 /Users/pmjones/Code/pmjones/php-request/src/SapiResponseSender.php(11): SapiResponseSender->registerHeaderCallback(Object(SapiResponse))
+#1 /Users/pmjones/Code/pmjones/php-request/tests/sender/sendCode.php(4): SapiResponseSender->send(Object(SapiResponse))
+#2 {main}
+  thrown in /Users/pmjones/Code/pmjones/php-request/src/SapiResponseSender.php on line 20

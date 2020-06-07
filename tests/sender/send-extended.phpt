@@ -14,14 +14,9 @@ $ext->setCookie('baz', 'dib');
 $ext->setContent('content');
 (new SapiResponseSender())->send($ext);
 echo "\n";
-var_dump(headers_list());
+--EXPECTHEADERS--
+foo: bar
+Set-Cookie: baz=dib
+Content-type: text/html; charset=UTF-8
 --EXPECT--
 content
-array(3) {
-  [0]=>
-  string(8) "foo: bar"
-  [1]=>
-  string(19) "Set-Cookie: baz=dib"
-  [2]=>
-  string(38) "Content-type: text/html; charset=UTF-8"
-}

@@ -1,9 +1,0 @@
-foo: bar
-baz: dib, zim
---HEADERS--
-array(2) {
-  [0]=>
-  string(8) "foo: bar"
-  [1]=>
-  string(13) "baz: dib, zim"
-}

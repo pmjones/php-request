@@ -1,8 +1,0 @@
-001+ Fatal error: Uncaught Error: Call to undefined method SapiResponse::getHeaderCallback() in /Users/pmjones/Code/pmjones/php-request/src/SapiResponseSender.php:20
-002+ Stack trace:
-001- foo
-002- failure
-003+ #0 /Users/pmjones/Code/pmjones/php-request/src/SapiResponseSender.php(11): SapiResponseSender->registerHeaderCallback(Object(SapiResponse))
-004+ #1 /Users/pmjones/Code/pmjones/php-request/tests/sender/sendContent-generator-throws.php(9): SapiResponseSender->send(Object(SapiResponse))
-005+ #2 {main}
-006+   thrown in /Users/pmjones/Code/pmjones/php-request/src/SapiResponseSender.php on line 20

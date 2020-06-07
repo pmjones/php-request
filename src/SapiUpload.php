@@ -1,6 +1,15 @@
 <?php
 declare(strict_types=1);
 
+/**
+ * Read-only SAPI file-upload object.
+ *
+ * @property-read $name
+ * @property-read $type
+ * @property-read $size
+ * @property-read $tmpName
+ * @property-read $error
+ */
 class SapiUpload
 {
     private /* bool */ $isUnconstructed = true;

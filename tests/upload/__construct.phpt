@@ -2,7 +2,6 @@
 SapiUpload::__construct
 --FILE--
 <?php
-
 // Basic construct
 $upload = new SapiUpload('foo', 'text/plain', 123, '/tmp/foo.txt', 0);
 var_dump(get_class($upload));

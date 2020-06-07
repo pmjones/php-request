@@ -3,15 +3,13 @@ declare(strict_types=1);
 
 class SapiUpload
 {
-    public /* readonly ?string */ $name;
+    private /* bool */ $isUnconstructed = true;
 
-    public /* readonly ?string */ $type;
-
-    public /* readonly ?int */ $size;
-
-    public /* readonly ?string */ $tmpName;
-
-    public /* readonly ?int */ $error;
+    private /* readonly ?string */ $name;
+    private /* readonly ?string */ $type;
+    private /* readonly ?int */ $size;
+    private /* readonly ?string */ $tmpName;
+    private /* readonly ?int */ $error;
 
     public function __construct(
         ?string $name,
@@ -20,15 +18,26 @@ class SapiUpload
         ?string $tmpName,
         ?int $error
     ) {
+        if (! $this->isUnconstructed) {
+            $class = get_class($this);
+            throw new RuntimeException("{$class}::__construct() called after construction.");
+        }
+
         $this->name = $name;
         $this->type = $type;
         $this->size = $size;
         $this->tmpName = $tmpName;
         $this->error = $error;
+
+        $this->isUnconstructed = false;
     }
 
     final public function __get(string $key) // : mixed
     {
+        if ($key === 'content') {
+            return $this->content ?? file_get_contents('php://input');
+        }
+
         if (property_exists($this, $key)) {
             return $this->$key;
         }
@@ -41,6 +50,9 @@ class SapiUpload
     {
         $class = get_class($this);
 
+        // problem is that extended classes
+        // cannot get their proprties set from the outside,
+        // as if they are public
         if (property_exists($this, $key)) {
             throw new RuntimeException("{$class}::\${$key} is read-only.");
         }

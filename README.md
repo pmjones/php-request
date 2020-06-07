@@ -1,15 +1,13 @@
 # pmjones/request
 
-This package provides a PHP 5.x userland implementation of the PECL
-[`request`](http://pecl.php.net/request) extension (which is for PHP 7.x).
+This package provides a userland implementation of the PECL
+[`request`](http://pecl.php.net/request) extension, version 2.
 
 Usage is identical to that of the extension, with these exceptions:
 
-- The `SapiRequest::__get()` etc. magic methods are declared as `final`; this
-  is to help mitigate attempts to subvert immutability.
-
-- The `SapiRequest::$content` property is populated at instantiation time,
-  instead of at the time of first access.
+- The `SapiRequest` and `SapiUpload` magic methods (`__get()`, etc.) are
+  declared as `final`; this is to help mitigate attempts to subvert
+  immutability.
 
 You can read the documentation at <https://github.com/pmjones/ext-request>.
 

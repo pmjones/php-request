@@ -1,8 +1,0 @@
-
----- EXPECTED OUTPUT
-ok
-string(3) "foo"
----- ACTUAL OUTPUT
-fail
-string(3) "foo"
----- FAILED

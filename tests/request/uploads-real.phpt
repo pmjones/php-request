@@ -34,55 +34,63 @@ var_dump($request->uploads);
 --EXPECTF--
 array(4) {
   ["file1"]=>
-  object(SapiUpload)#%d (5) {
-    ["name"]=>
+  object(SapiUpload)#2 (6) {
+    ["isUnconstructed":"SapiUpload":private]=>
+    bool(false)
+    ["name":"SapiUpload":private]=>
     string(9) "file1.txt"
-    ["type"]=>
+    ["type":"SapiUpload":private]=>
     string(16) "text/plain-file1"
-    ["size"]=>
+    ["size":"SapiUpload":private]=>
     int(1)
-    ["tmpName"]=>
+    ["tmpName":"SapiUpload":private]=>
     string(%d) "%s"
-    ["error"]=>
+    ["error":"SapiUpload":private]=>
     int(0)
   }
   ["file2"]=>
-  object(SapiUpload)#%d (5) {
-    ["name"]=>
+  object(SapiUpload)#4 (6) {
+    ["isUnconstructed":"SapiUpload":private]=>
+    bool(false)
+    ["name":"SapiUpload":private]=>
     string(9) "file2.txt"
-    ["type"]=>
+    ["type":"SapiUpload":private]=>
     string(0) ""
-    ["size"]=>
+    ["size":"SapiUpload":private]=>
     int(0)
-    ["tmpName"]=>
+    ["tmpName":"SapiUpload":private]=>
     string(0) ""
-    ["error"]=>
+    ["error":"SapiUpload":private]=>
     int(2)
   }
   ["file3"]=>
-  object(SapiUpload)#%d (5) {
-    ["name"]=>
+  object(SapiUpload)#5 (6) {
+    ["isUnconstructed":"SapiUpload":private]=>
+    bool(false)
+    ["name":"SapiUpload":private]=>
     string(9) "file3.txt"
-    ["type"]=>
+    ["type":"SapiUpload":private]=>
     string(16) "text/plain-file3"
-    ["size"]=>
+    ["size":"SapiUpload":private]=>
     int(1)
-    ["tmpName"]=>
+    ["tmpName":"SapiUpload":private]=>
     string(%d) "%s"
-    ["error"]=>
+    ["error":"SapiUpload":private]=>
     int(0)
   }
   ["file4"]=>
-  object(SapiUpload)#%d (5) {
-    ["name"]=>
+  object(SapiUpload)#6 (6) {
+    ["isUnconstructed":"SapiUpload":private]=>
+    bool(false)
+    ["name":"SapiUpload":private]=>
     string(9) "file4.txt"
-    ["type"]=>
+    ["type":"SapiUpload":private]=>
     string(0) ""
-    ["size"]=>
+    ["size":"SapiUpload":private]=>
     int(1)
-    ["tmpName"]=>
+    ["tmpName":"SapiUpload":private]=>
     string(%d) "%s"
-    ["error"]=>
+    ["error":"SapiUpload":private]=>
     int(0)
   }
 }

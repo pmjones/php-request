@@ -104,16 +104,18 @@ var_dump($request->uploads);
 --EXPECTF--
 array(2) {
   ["foo"]=>
-  object(SapiUpload)#%d (5) {
-    ["name"]=>
+  object(SapiUpload)#2 (6) {
+    ["isUnconstructed":"SapiUpload":private]=>
+    bool(false)
+    ["name":"SapiUpload":private]=>
     string(8) "foo_name"
-    ["type"]=>
+    ["type":"SapiUpload":private]=>
     string(8) "foo_type"
-    ["size"]=>
+    ["size":"SapiUpload":private]=>
     int(0)
-    ["tmpName"]=>
+    ["tmpName":"SapiUpload":private]=>
     string(12) "foo_tmp_name"
-    ["error"]=>
+    ["error":"SapiUpload":private]=>
     int(4)
   }
   ["dib"]=>
@@ -121,126 +123,144 @@ array(2) {
     ["dib1"]=>
     array(3) {
       ["dib1a"]=>
-      object(SapiUpload)#%d (5) {
-        ["name"]=>
+      object(SapiUpload)#4 (6) {
+        ["isUnconstructed":"SapiUpload":private]=>
+        bool(false)
+        ["name":"SapiUpload":private]=>
         string(10) "dib1a_name"
-        ["type"]=>
+        ["type":"SapiUpload":private]=>
         string(10) "dib1a_type"
-        ["size"]=>
+        ["size":"SapiUpload":private]=>
         int(0)
-        ["tmpName"]=>
+        ["tmpName":"SapiUpload":private]=>
         string(14) "dib1a_tmp_name"
-        ["error"]=>
+        ["error":"SapiUpload":private]=>
         int(4)
       }
       ["dib1b"]=>
-      object(SapiUpload)#%d (5) {
-        ["name"]=>
+      object(SapiUpload)#5 (6) {
+        ["isUnconstructed":"SapiUpload":private]=>
+        bool(false)
+        ["name":"SapiUpload":private]=>
         string(10) "dib1b_name"
-        ["type"]=>
+        ["type":"SapiUpload":private]=>
         string(10) "dib1b_type"
-        ["size"]=>
+        ["size":"SapiUpload":private]=>
         int(0)
-        ["tmpName"]=>
+        ["tmpName":"SapiUpload":private]=>
         string(14) "dib1b_tmp_name"
-        ["error"]=>
+        ["error":"SapiUpload":private]=>
         int(4)
       }
       ["dib1c"]=>
-      object(SapiUpload)#%d (5) {
-        ["name"]=>
+      object(SapiUpload)#6 (6) {
+        ["isUnconstructed":"SapiUpload":private]=>
+        bool(false)
+        ["name":"SapiUpload":private]=>
         string(10) "dib1c_name"
-        ["type"]=>
+        ["type":"SapiUpload":private]=>
         string(10) "dib1c_type"
-        ["size"]=>
+        ["size":"SapiUpload":private]=>
         int(0)
-        ["tmpName"]=>
+        ["tmpName":"SapiUpload":private]=>
         string(14) "dib1c_tmp_name"
-        ["error"]=>
+        ["error":"SapiUpload":private]=>
         int(4)
       }
     }
     ["dib2"]=>
     array(3) {
       ["dib2a"]=>
-      object(SapiUpload)#%d (5) {
-        ["name"]=>
+      object(SapiUpload)#7 (6) {
+        ["isUnconstructed":"SapiUpload":private]=>
+        bool(false)
+        ["name":"SapiUpload":private]=>
         string(10) "dib2a_name"
-        ["type"]=>
+        ["type":"SapiUpload":private]=>
         string(10) "dib2a_type"
-        ["size"]=>
+        ["size":"SapiUpload":private]=>
         int(0)
-        ["tmpName"]=>
+        ["tmpName":"SapiUpload":private]=>
         string(14) "dib2a_tmp_name"
-        ["error"]=>
+        ["error":"SapiUpload":private]=>
         int(4)
       }
       ["dib2b"]=>
-      object(SapiUpload)#%d (5) {
-        ["name"]=>
+      object(SapiUpload)#8 (6) {
+        ["isUnconstructed":"SapiUpload":private]=>
+        bool(false)
+        ["name":"SapiUpload":private]=>
         string(10) "dib2b_name"
-        ["type"]=>
+        ["type":"SapiUpload":private]=>
         string(10) "dib2b_type"
-        ["size"]=>
+        ["size":"SapiUpload":private]=>
         int(0)
-        ["tmpName"]=>
+        ["tmpName":"SapiUpload":private]=>
         string(14) "dib2b_tmp_name"
-        ["error"]=>
+        ["error":"SapiUpload":private]=>
         int(4)
       }
       ["dib2c"]=>
-      object(SapiUpload)#%d (5) {
-        ["name"]=>
+      object(SapiUpload)#9 (6) {
+        ["isUnconstructed":"SapiUpload":private]=>
+        bool(false)
+        ["name":"SapiUpload":private]=>
         string(10) "dib2c_name"
-        ["type"]=>
+        ["type":"SapiUpload":private]=>
         string(10) "dib2c_type"
-        ["size"]=>
+        ["size":"SapiUpload":private]=>
         int(0)
-        ["tmpName"]=>
+        ["tmpName":"SapiUpload":private]=>
         string(14) "dib2c_tmp_name"
-        ["error"]=>
+        ["error":"SapiUpload":private]=>
         int(4)
       }
     }
     ["dib3"]=>
     array(3) {
       ["dib3a"]=>
-      object(SapiUpload)#%d (5) {
-        ["name"]=>
+      object(SapiUpload)#10 (6) {
+        ["isUnconstructed":"SapiUpload":private]=>
+        bool(false)
+        ["name":"SapiUpload":private]=>
         string(10) "dib3a_name"
-        ["type"]=>
+        ["type":"SapiUpload":private]=>
         string(10) "dib3a_type"
-        ["size"]=>
+        ["size":"SapiUpload":private]=>
         int(0)
-        ["tmpName"]=>
+        ["tmpName":"SapiUpload":private]=>
         string(14) "dib3a_tmp_name"
-        ["error"]=>
+        ["error":"SapiUpload":private]=>
         int(4)
       }
       ["dib3b"]=>
-      object(SapiUpload)#%d (5) {
-        ["name"]=>
+      object(SapiUpload)#11 (6) {
+        ["isUnconstructed":"SapiUpload":private]=>
+        bool(false)
+        ["name":"SapiUpload":private]=>
         string(10) "dib3b_name"
-        ["type"]=>
+        ["type":"SapiUpload":private]=>
         string(10) "dib3b_type"
-        ["size"]=>
+        ["size":"SapiUpload":private]=>
         int(0)
-        ["tmpName"]=>
+        ["tmpName":"SapiUpload":private]=>
         string(14) "dib3b_tmp_name"
-        ["error"]=>
+        ["error":"SapiUpload":private]=>
         int(4)
       }
       ["dib3c"]=>
-      object(SapiUpload)#%d (5) {
-        ["name"]=>
+      object(SapiUpload)#12 (6) {
+        ["isUnconstructed":"SapiUpload":private]=>
+        bool(false)
+        ["name":"SapiUpload":private]=>
         string(10) "dib3c_name"
-        ["type"]=>
+        ["type":"SapiUpload":private]=>
         string(10) "dib3c_type"
-        ["size"]=>
+        ["size":"SapiUpload":private]=>
         int(0)
-        ["tmpName"]=>
+        ["tmpName":"SapiUpload":private]=>
         string(14) "dib3c_tmp_name"
-        ["error"]=>
+        ["error":"SapiUpload":private]=>
         int(4)
       }
     }

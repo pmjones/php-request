@@ -5,9 +5,6 @@ class SapiResponseSender
 {
     public function send(SapiResponseInterface $response) : void
     {
-        if (headers_sent($file, $line)) {
-            throw new RuntimeException("Headers already sent from {$file} on {$line}.");
-        }
         $this->runHeaderCallbacks($response);
         $this->sendStatus($response);
         $this->sendHeaders($response);

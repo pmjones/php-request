@@ -12,7 +12,7 @@ class SapiResponseSender
         $this->sendContent($response);
     }
 
-    protected function runHeaderCallbacks(SapiResponseInterface $response) : void
+    public function runHeaderCallbacks(SapiResponseInterface $response) : void
     {
         $callbacks = $response->getHeaderCallbacks() ?? [];
         foreach ($callbacks as $callback) {
@@ -20,14 +20,14 @@ class SapiResponseSender
         }
     }
 
-    protected function sendStatus(SapiResponseInterface $response) : void
+    public function sendStatus(SapiResponseInterface $response) : void
     {
         $version = $response->getVersion() ?? '1.1';
         $code = $response->getCode() ?? 200;
         header("HTTP/{$version} {$code}", true, $code);
     }
 
-    protected function sendHeaders(SapiResponseInterface $response) : void
+    public function sendHeaders(SapiResponseInterface $response) : void
     {
         $headers = $response->getHeaders() ?? [];
         foreach ($headers as $label => $value) {
@@ -35,7 +35,7 @@ class SapiResponseSender
         }
     }
 
-    protected function sendCookies(SapiResponseInterface $response) : void
+    public function sendCookies(SapiResponseInterface $response) : void
     {
         $cookies = $response->getCookies() ?? [];
 
@@ -50,7 +50,7 @@ class SapiResponseSender
         }
     }
 
-    protected function sendContent(SapiResponseInterface $response) : void
+    public function sendContent(SapiResponseInterface $response) : void
     {
         $content = $response->getContent();
 
